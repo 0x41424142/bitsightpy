@@ -1,12 +1,13 @@
 """
-get_endpoints.py - Contains the user-facing base function to get a dictionary of all available BitSight API endpoints.
+get_endpoints.py - Contains the user-facing base function to get a dictionary of all available Bitsight API endpoints.
 """
 
 from .base import call_api
 
+
 def get_endpoints(key: str) -> dict:
     """
-    Get a list of all available BitSight API endpoints.
+    Get a list of all available Bitsight API endpoints.
 
     Args:
         key (str): The API token to use for authentication.
