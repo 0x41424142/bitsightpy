@@ -26,9 +26,11 @@ def get_folders(key: str, exclude_subscription_folders: bool = False) -> list[di
     ).json()
 
 
-def create_folder(key: str, name: str, description: str = None, content_expiry_days: int = None) -> dict:
+def create_folder(
+    key: str, name: str, description: str = None, content_expiry_days: int = None
+) -> dict:
     """
-    Create a new folder. Folders can be used to organize your portfolio to better understand the 
+    Create a new folder. Folders can be used to organize your portfolio to better understand the
     security performance of certain groups of companies, such as IT vendors.
 
     Args:
@@ -43,11 +45,11 @@ def create_folder(key: str, name: str, description: str = None, content_expiry_d
 
     if content_expiry_days and type(content_expiry_days) != int:
         raise TypeError("content_expiry_days must be an integer.")
-    
+
     post_data = {
         "name": str(name),
         "description": str(description),
-        "content_expiry_days": content_expiry_days
+        "content_expiry_days": content_expiry_days,
     }
 
     return call_api(

@@ -34,7 +34,9 @@ def get_company_details(key: str, company_guid: str, fields: list[str] = None) -
     ).json()
 
 
-def get_findings_statistics(key: str, company_guid: str, fields: list[str] = None, expand: str = None) -> list[dict]:
+def get_findings_statistics(
+    key: str, company_guid: str, fields: list[str] = None, expand: str = None
+) -> list[dict]:
     """
     Get statistics on findings for a specific company.
 
@@ -64,7 +66,9 @@ def get_findings_statistics(key: str, company_guid: str, fields: list[str] = Non
     ).json()
 
 
-def get_findings_summaries(key: str, company_guid: str, fields: list[str] = None, expand: str = None) -> dict:
+def get_findings_summaries(
+    key: str, company_guid: str, fields: list[str] = None, expand: str = None
+) -> dict:
     """
     Get summarized findings data for a specific company in your ratings tree.
 
