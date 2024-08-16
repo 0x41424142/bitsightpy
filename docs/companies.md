@@ -22,7 +22,7 @@ You can use ```bitsightpy.portfolio.get_details()``` to get a list of companies 
 | -- | -- | -- |
 | ```key``` | ```str``` | ✅ |
 | ```company_guid``` | ```str``` as a company guid | ✅ |
-| ```fields``` | ```str``` (include specific fields in the output) | ❌ |
+| ```fields``` | ```list[str]``` (include specific fields in the output) | ❌ |
 
 **Example Output:**
 
