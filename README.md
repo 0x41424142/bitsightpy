@@ -1,4 +1,4 @@
-# bitsightpy
+# bitsightpy - A Python SDK for Interacting With Bitsight APIs
 
 ```bitsightpy``` is an SDK for interacting with [Bitsight](https://bitsight.com) APIs.
 
