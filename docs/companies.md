@@ -140,10 +140,43 @@ You can use ```bitsightpy.portfolio.get_details()``` to get a list of companies 
     "start_date": "2022-12-01",
     "end_date": "2023-01-01",
     "count": 47,
-    "first_seen_count": 1
+    "first_seen_count": 1,
     "last_seen_count": 1,
     "active_count": 0,
     "resolved_count": 0
   }
 ]
+```
+
+### Get Findings Summaries API
+
+```get_findings_summaries``` returns summarized findings data for a specific company in your ratings tree.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a company guid | ✅ |
+| ```fields``` | ```list[str]``` (include specific fields in the output) | ❌ |
+| ```expand``` | ```str``` such as ```'findings_severity_counts'```. ⚠️ ONLY VALID IF YOUR SUBSCRIPTION HAS ATTACK SURFACE ANALYTICS ENABLED. | ❌ |
+
+**Example Output:**
+
+```json
+{
+  "findings_count": 10,
+  "findings_risk_vector_counts": [
+    {
+      "count": 2,
+      "risk_vector": {
+        "slug": "spf"
+      }
+    },
+    {
+      "count": 8,
+      "risk_vector": {
+        "slug": "dkim"
+      }
+    }
+  ]
+}
 ```
