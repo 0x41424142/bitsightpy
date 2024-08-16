@@ -23,4 +23,6 @@ from .calls import (
     get_service_provider_products,
     get_security_rating_company_details,
     get_security_rating_country_details,
+    get_risk_vector_grades,
+    get_portfolio_statistics,
 )

@@ -19,4 +19,6 @@ users = get_users(key)
 | -- | -- |
 | ```users``` | ✅ Fully Implemented |
 | ```insights``` | ✅ Fully Implemented |
-| ```portfolio``` | 🏗️ In Progress |
+| ```portfolio``` | ✅ Fully Implemented |
+| ```companies``` | 🏗️ In Progress |
+| ```folders``` | 🏗️ In Progress |

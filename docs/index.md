@@ -12,3 +12,13 @@ key = '<API_TOKEN>'
 users = get_users(key)
 >>>[{'friendly_name': 'Alice Johnson', 'email': 'alice.johnson@email.com', ...}, ...]
 ```
+
+## Currently Supported Modules/Calls
+
+| Module | Status |
+| -- | -- |
+| ```users``` | ✅ Fully Implemented |
+| ```insights``` | ✅ Fully Implemented |
+| ```portfolio``` | ✅ Fully Implemented |
+| ```companies``` | 🏗️ In Progress |
+| ```folders``` | 🏗️ In Progress |

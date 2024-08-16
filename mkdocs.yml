@@ -7,6 +7,8 @@ nav:
   - Users APIs: users.md
   - Portfolio APIs: portfolio.md
   - Insight APIs: insight.md
+  - Folder APIs: folder.md
+  - Companies APIs: companies.md
 
 markdown_extensions:
   - pymdownx.highlight:

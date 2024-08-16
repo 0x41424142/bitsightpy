@@ -15,4 +15,4 @@ def get_endpoints(key: str) -> dict:
     Returns:
         dict: A dictionary containing the available endpoints.
     """
-    return call_api(key=key, module="get_endpoints", endpoint='get_endpoints').json()
+    return call_api(key=key, module="get_endpoints", endpoint="get_endpoints").json()

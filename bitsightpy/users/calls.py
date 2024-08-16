@@ -253,21 +253,22 @@ def reset_2fa(key: str, guid: str) -> int:
 def get_quota(key: str) -> dict:
     """
     Get your subscription quota.
-    
+
     Args:
         key (str): The API token to use for authentication.
-        
+
     Returns:
-        dict: A dictionary containing the API response.            
+        dict: A dictionary containing the API response.
     """
 
     return call_api(key=key, module="users", endpoint="get_quota").json()
+
 
 def get_company_views(key: str, user_guid: str, **kwargs) -> dict:
     """
     See your company monitoring activity, including companies you have
     recently or most often viewed.
-    
+
     Args:
         key (str): The API token to use for authentication.
         user_guid (str): The GUID of the user to get company views for.

@@ -183,7 +183,16 @@ def assign_contact(
         key=key, module="portfolio", endpoint="assign_contact", post_data=post_data
     ).json()
 
-def edit_contact(key: str, guid: str, company_guid: str, friendly_name: str, formal_name: str, email: str, phone_number: str = None):
+
+def edit_contact(
+    key: str,
+    guid: str,
+    company_guid: str,
+    friendly_name: str,
+    formal_name: str,
+    email: str,
+    phone_number: str = None,
+):
     """
     Edit a contact for a company in your portfolio.
 
@@ -210,8 +219,13 @@ def edit_contact(key: str, guid: str, company_guid: str, friendly_name: str, for
     post_data = {k: v for k, v in post_data.items() if v is not None}
 
     return call_api(
-        key=key, module="portfolio", endpoint="edit_contact", post_data=post_data, params={"guid": guid}
+        key=key,
+        module="portfolio",
+        endpoint="edit_contact",
+        post_data=post_data,
+        params={"guid": guid},
     ).json()
+
 
 def get_geographic_ipspace(key: str) -> list[dict]:
     """
@@ -228,6 +242,7 @@ def get_geographic_ipspace(key: str) -> list[dict]:
         key=key, module="portfolio", endpoint="get_geographic_ipspace"
     ).json()
 
+
 def get_custom_identifiers(key: str) -> list[dict]:
     """
     Get custom company identifiers. This is useful for associating Bitsight data with vendor-related information.
@@ -242,6 +257,7 @@ def get_custom_identifiers(key: str) -> list[dict]:
     return call_api(
         key=key, module="portfolio", endpoint="get_custom_identifiers"
     ).json()
+
 
 def customize_company_id(key: str, guid: str, name: str, custom_id: str):
     """
@@ -264,7 +280,10 @@ def customize_company_id(key: str, guid: str, name: str, custom_id: str):
     post_data = {k: v for k, v in post_data.items() if v is not None}
 
     return call_api(
-        key=key, module="portfolio", endpoint="customize_company_id", post_data=post_data
+        key=key,
+        module="portfolio",
+        endpoint="customize_company_id",
+        post_data=post_data,
     ).json()
 
 
@@ -296,43 +315,50 @@ def bulk_manage_ids(key: str, **kwargs) -> dict:
     )
     ```
     """
-    if 'add' not in kwargs and 'delete' not in kwargs:
+    if "add" not in kwargs and "delete" not in kwargs:
         raise ValueError("You must pass either 'add' or 'delete'.")
-    
+
     # Make sure that add is a list of dictionaries and that those dictionaries only have 'guid' and 'custom_id' keys
-    if 'add' in kwargs:
-        for item in kwargs['add']:
+    if "add" in kwargs:
+        for item in kwargs["add"]:
             if type(item) != dict:
-                raise ValueError(f"add must be a list of dictionaries, not {type(item)}")
-            if 'guid' not in item or 'custom_id' not in item:
-                raise ValueError("Each item in 'add' must have 'guid' and 'custom_id' keys.")
-            
+                raise ValueError(
+                    f"add must be a list of dictionaries, not {type(item)}"
+                )
+            if "guid" not in item or "custom_id" not in item:
+                raise ValueError(
+                    "Each item in 'add' must have 'guid' and 'custom_id' keys."
+                )
+
     # Make sure that delete is a list of dictionaries and that those dictionaries only have 'guid' keys
-    if 'delete' in kwargs:
-        for item in kwargs['delete']:
+    if "delete" in kwargs:
+        for item in kwargs["delete"]:
             if type(item) != dict:
-                raise ValueError(f"delete must be a list of dictionaries, not {type(item)}")
-            if 'guid' not in item:
+                raise ValueError(
+                    f"delete must be a list of dictionaries, not {type(item)}"
+                )
+            if "guid" not in item:
                 raise ValueError("Each item in 'delete' must have 'guid' key.")
-    
+
     post_data = {}
-    
+
     # Handle 'add' key
-    if 'add' in kwargs:
-        post_data['add'] = kwargs['add']
-    
+    if "add" in kwargs:
+        post_data["add"] = kwargs["add"]
+
     # Handle 'delete' key
-    if 'delete' in kwargs:
-        post_data['delete'] = [{'guid': guid} for guid in kwargs['delete']]
-    
+    if "delete" in kwargs:
+        post_data["delete"] = [{"guid": guid} for guid in kwargs["delete"]]
+
     return call_api(
         key=key, module="portfolio", endpoint="bulk_manage_ids", post_data=post_data
     ).json()
 
+
 def portfolio_api_filters(key: str, **kwargs) -> dict:
     """
     Get infections, open ports, vulnerabilities, and stats about both present in your portfolio.
-    
+
     Args:
         key (str): The API token to use for authentication.
         **kwargs: Additional optional keyword arguments to pass to the API.
@@ -349,11 +375,12 @@ def portfolio_api_filters(key: str, **kwargs) -> dict:
         tier (list[str]): Filter by tier guids. See https://help.bitsighttech.com/hc/en-us/articles/360021083694-GET-Tiers
     """
 
-    kwargs['format'] = 'json'
+    kwargs["format"] = "json"
 
     return call_api(
         key=key, module="portfolio", endpoint="portfolio_api_filters", params=kwargs
     ).json()
+
 
 def portfolio_unique_identifiers(key: str) -> list:
     """
@@ -370,7 +397,10 @@ def portfolio_unique_identifiers(key: str) -> list:
         key=key, module="portfolio", endpoint="portfolio_unique_identifiers"
     ).json()
 
-def get_portfolio_products(key: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+
+def get_portfolio_products(
+    key: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
     """
     Get a list of products and product types in your portfolio.
 
@@ -401,7 +431,10 @@ def get_portfolio_products(key: str, page_count: Union[int, 'all'] = 'all', **kw
 
     while True:
         response = call_api(
-            key=key, module="portfolio", endpoint="get_portfolio_products", params=kwargs
+            key=key,
+            module="portfolio",
+            endpoint="get_portfolio_products",
+            params=kwargs,
         )
         data = response.json()
 
@@ -421,7 +454,10 @@ def get_portfolio_products(key: str, page_count: Union[int, 'all'] = 'all', **kw
 
     return responses
 
-def get_product_usage(key: str, guid: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+
+def get_product_usage(
+    key: str, guid: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
     """
     Get a list of companies using a specific product.
 
@@ -442,7 +478,7 @@ def get_product_usage(key: str, guid: str, page_count: Union[int, 'all'] = 'all'
         list[dict]: JSON containing the API response.
     """
 
-        # Check that page_count is valid
+    # Check that page_count is valid
     if page_count != "all" and type(page_count) != int and page_count < 1:
         raise ValueError(
             f"page_count must be a positive integer or 'all', not {type(page_count)}"
@@ -473,7 +509,10 @@ def get_product_usage(key: str, guid: str, page_count: Union[int, 'all'] = 'all'
 
     return responses
 
-def get_product_types(key: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+
+def get_product_types(
+    key: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
     """
     Get a list of companies using a specific product.
 
@@ -493,7 +532,7 @@ def get_product_types(key: str, page_count: Union[int, 'all'] = 'all', **kwargs)
         list[dict]: JSON containing the API response.
     """
 
-        # Check that page_count is valid
+    # Check that page_count is valid
     if page_count != "all" and type(page_count) != int and page_count < 1:
         raise ValueError(
             f"page_count must be a positive integer or 'all', not {type(page_count)}"
@@ -524,7 +563,10 @@ def get_product_types(key: str, page_count: Union[int, 'all'] = 'all', **kwargs)
 
     return responses
 
-def get_service_providers(key: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+
+def get_service_providers(
+    key: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
     """
     Get a list service providers in your account.
 
@@ -544,7 +586,7 @@ def get_service_providers(key: str, page_count: Union[int, 'all'] = 'all', **kwa
         list[dict]: JSON containing the API response.
     """
 
-        # Check that page_count is valid
+    # Check that page_count is valid
     if page_count != "all" and type(page_count) != int and page_count < 1:
         raise ValueError(
             f"page_count must be a positive integer or 'all', not {type(page_count)}"
@@ -575,7 +617,10 @@ def get_service_providers(key: str, page_count: Union[int, 'all'] = 'all', **kwa
 
     return responses
 
-def get_service_provider_dependents(key: str, guid: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+
+def get_service_provider_dependents(
+    key: str, guid: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
     """
     Get a list of companies dependent on a specific service provider.
 
@@ -596,7 +641,7 @@ def get_service_provider_dependents(key: str, guid: str, page_count: Union[int, 
         list[dict]: JSON containing the API response.
     """
 
-        # Check that page_count is valid
+    # Check that page_count is valid
     if page_count != "all" and type(page_count) != int and page_count < 1:
         raise ValueError(
             f"page_count must be a positive integer or 'all', not {type(page_count)}"
@@ -605,11 +650,14 @@ def get_service_provider_dependents(key: str, guid: str, page_count: Union[int, 
     responses = []
     pulled = 0
 
-    kwargs['guid'] = guid
+    kwargs["guid"] = guid
 
     while True:
         response = call_api(
-            key=key, module="portfolio", endpoint="get_service_provider_dependents", params=kwargs
+            key=key,
+            module="portfolio",
+            endpoint="get_service_provider_dependents",
+            params=kwargs,
         )
         data = response.json()
 
@@ -629,7 +677,10 @@ def get_service_provider_dependents(key: str, guid: str, page_count: Union[int, 
 
     return responses
 
-def get_service_provider_products(key: str, guid: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+
+def get_service_provider_products(
+    key: str, guid: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
     """
     Get a list of companies using a specific product.
 
@@ -651,7 +702,7 @@ def get_service_provider_products(key: str, guid: str, page_count: Union[int, 'a
         list[dict]: JSON containing the API response.
     """
 
-        # Check that page_count is valid
+    # Check that page_count is valid
     if page_count != "all" and type(page_count) != int and page_count < 1:
         raise ValueError(
             f"page_count must be a positive integer or 'all', not {type(page_count)}"
@@ -660,11 +711,14 @@ def get_service_provider_products(key: str, guid: str, page_count: Union[int, 'a
     responses = []
     pulled = 0
 
-    kwargs['guid'] = guid
+    kwargs["guid"] = guid
 
     while True:
         response = call_api(
-            key=key, module="portfolio", endpoint="get_service_provider_products", params=kwargs
+            key=key,
+            module="portfolio",
+            endpoint="get_service_provider_products",
+            params=kwargs,
         )
         data = response.json()
 
@@ -683,6 +737,7 @@ def get_service_provider_products(key: str, guid: str, page_count: Union[int, 'a
                 kwargs[param] = new_params[param]
 
     return responses
+
 
 def get_security_rating_company_details(key: str, **kwargs) -> list[dict]:
     """
@@ -706,8 +761,12 @@ def get_security_rating_company_details(key: str, **kwargs) -> list[dict]:
     """
 
     return call_api(
-        key=key, module="portfolio", endpoint="get_security_rating_company_details", params=kwargs
+        key=key,
+        module="portfolio",
+        endpoint="get_security_rating_company_details",
+        params=kwargs,
     ).json()
+
 
 def get_security_rating_country_details(key: str, **kwargs) -> list[dict]:
     """
@@ -731,5 +790,92 @@ def get_security_rating_country_details(key: str, **kwargs) -> list[dict]:
     """
 
     return call_api(
-        key=key, module="portfolio", endpoint="get_security_rating_country_details", params=kwargs
+        key=key,
+        module="portfolio",
+        endpoint="get_security_rating_country_details",
+        params=kwargs,
+    ).json()
+
+
+def get_risk_vector_grades(
+    key: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
+    """
+    Get risk vector grades for companies in your portfolio.
+
+    Args:
+        key (str): The API token to use for authentication.
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        limit (int): The number of results to return. Defaults to 100.
+        offset (int): The number of results to skip. Defaults to 0.
+        company_guid (str): Filter by company GUID. See https://help.bitsighttech.com/hc/en-us/articles/360055740193-GET-Portfolio-Details
+        folder (str): Filter by folder GUID. See https://help.bitsighttech.com/hc/en-us/articles/360020042473-GET-Folder-Details
+        period (Literal['latest', 'monthly']): Filter by period. Monthly returns 1 year of monthly data.
+        tier (str): Filter by tier guid. See https://help.bitsighttech.com/hc/en-us/articles/360021083694-GET-Tiers
+
+    Returns:
+        list[dict]: JSON containing the API response.
+    """
+
+    # Check that page_count is valid
+    if page_count != "all" and type(page_count) != int and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    while True:
+        response = call_api(
+            key=key,
+            module="portfolio",
+            endpoint="get_risk_vector_grades",
+            params=kwargs,
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                kwargs[param] = new_params[param]
+
+    return responses
+
+
+def get_portfolio_statistics(key: str, **kwargs) -> dict:
+    """
+    Get high level statistics about your portfolio, including
+    the distribution of companies across rating categories (advanced, basic, etc.),
+    the highest, lowest, median security ratings, &
+    risk vector averages.
+
+    Args:
+        key (str): The API token to use for authentication.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        folder (str): Filter by folder GUID. See https://help.bitsighttech.com/hc/en-us/articles/360020042473-GET-Folder-Details
+        rating_date (str): The date to pull ratings from. Formatted as YYYY-MM-DD.
+        tier (str): Filter by tier guid. See https://help.bitsighttech.com/hc/en-us/articles/360021083694-GET-Tiers
+        types (Literal['ratings', 'risk_vector_averages']): Filter by type.
+
+    Returns:
+        dict: JSON containing the API response.
+    """
+
+    return call_api(
+        key=key, module="portfolio", endpoint="get_portfolio_statistics", params=kwargs
     ).json()

@@ -423,3 +423,134 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 
 **Example Response:**
 
+
+```json
+[
+  {
+    "guid": "12345678-1234-1234-1234-111111111111",
+    "name": "Some Country",
+    "ratings": [
+      {
+        "date": "2023-09-01",
+        "rating": 700,
+        "percentile": 30,
+        "risk_vectors": [
+          {
+            "name": "Botnet Infections",
+            "rating": 800,
+            "grade": "A",
+            "percentile": 100
+          },
+          {
+            "name": "Spam Propagation",
+            "rating": 550,
+            "grade": "D",
+            "percentile": 10
+          }
+          // ...
+        ]
+      }
+      // ...
+    ]
+  }
+  // ...
+]
+
+
+### Get Risk Vector Grades for Companies in Your Portfolio API
+
+```get_risk_vector_grades``` returns a list of risk vector grades for companies in your portfolio.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```page_count``` | ```Union[int >= 1, 'all']``` = ```'all'``` | ❌ |
+| ```limit``` | ```int``` = 100 | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```company_guid``` | ```str``` as a company guid | ❌ |
+| ```folder_guid``` | ```str``` as a folder guid | ❌ |
+| ```period``` | ```Literal['monthly', 'latest']``` ⚠️ ```'monthly``` returns the last year of data | ❌ |
+| ```tier_guid``` | ```str``` as a tier guid | ❌ |
+
+**Example Response:**
+
+```json
+[
+    {
+        "grades": [
+            {
+                "date": "2024-01-01",
+                "risk_vectors": [
+                    {
+                        "risk_vector": {
+                            "name": "Security Incidents",
+                            "slug": "breach",
+                            "risk_category": "Public Disclosures"
+                        },
+                        "grade": "B",
+                        "percentile": 80.0,
+                        "rating": 660
+                    },
+                    {
+                        "risk_vector": {
+                            "name": "DMARC",
+                            "slug": "dmarc",
+                            "risk_category": "Diligence"
+                        },
+                        "grade": "N/A",
+                        "percentile": 100.0,
+                        "rating": 820
+                    },
+                    //...
+                ] 
+                //...
+            }
+        ],
+        "company": {
+            "guid": "11111111-1111-1111-1111-111111111111",
+            "name": "Some Company"
+        }
+    }
+]
+```
+
+### Get Portfolio Statistics API
+
+```get_portfolio_statistics``` returns a list of statistics for your portfolio, including the distribution of companies across rating categories, high/low/median ratings, and risk vector averages.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder ``` | ```str``` as a folder guid | ❌ |
+| ```rating_date``` | ```str``` formatted as YYYY-MM-DD | ❌ |
+| ```tier``` | ```str``` as a tier guid | ❌ |
+| ```types``` | ```Literal['ratings', 'risk_vector_averages']``` | ❌ |
+
+**Example Response:**
+
+```json
+{
+  "risk_vector_averages":[
+    […]
+    {
+      "risk_vector_id":"breach",
+      "risk_vector":"Security Incidents",
+      "average_grade":"A",
+      "companies_below_average":130,
+      "percent_companies_below_average":1.13
+    }
+  ],
+  "ratings":{
+    "min_rating":300,
+    "max_rating":810,
+    "median_rating":720,
+    "entity_count_by_bucket":{
+      "advanced":5228,
+      "intermediate":5655,
+      "basic":1186
+    }
+  }
+}
+```
+
+###
