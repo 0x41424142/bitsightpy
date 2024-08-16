@@ -104,43 +104,49 @@ def edit_folder(key: str, folder_guid: str, **kwargs) -> int:
     payload = {}
 
     # Add simple key-value pairs to the payload:
-    for k in ['name', 'description', 'content_expiry_days']:
+    for k in ["name", "description", "content_expiry_days"]:
         if kwargs.get(k):
             payload[k] = kwargs[k]
 
     # Construct the shared_options object:
     shared_options = {}
 
-    if 'is_shared' in kwargs:
-        shared_options['is_shared'] = kwargs['is_shared']
-    if 'shared_with_all_users' in kwargs:
-        shared_options['shared_with_all_users'] = kwargs['shared_with_all_users']
-    if 'group_can_edit_contents' in kwargs:
-        shared_options['group_can_edit_contents'] = kwargs['group_can_edit_contents']
-    if 'group_can_edit_properties' in kwargs:
-        shared_options['group_can_edit_properties'] = kwargs['group_can_edit_properties']
-    
+    if "is_shared" in kwargs:
+        shared_options["is_shared"] = kwargs["is_shared"]
+    if "shared_with_all_users" in kwargs:
+        shared_options["shared_with_all_users"] = kwargs["shared_with_all_users"]
+    if "group_can_edit_contents" in kwargs:
+        shared_options["group_can_edit_contents"] = kwargs["group_can_edit_contents"]
+    if "group_can_edit_properties" in kwargs:
+        shared_options["group_can_edit_properties"] = kwargs[
+            "group_can_edit_properties"
+        ]
+
     # Construct the shared_with dictionary if email is provided:
     shared_with = {}
-    if 'email' in kwargs:
-        shared_with['email'] = kwargs['email']
-    if 'can_edit_folder_properties' in kwargs:
-        shared_with['can_edit_folder_properties'] = kwargs['can_edit_folder_properties']
-    if 'can_edit_folder_contents' in kwargs:
-        shared_with['can_edit_folder_contents'] = kwargs['can_edit_folder_contents']
+    if "email" in kwargs:
+        shared_with["email"] = kwargs["email"]
+    if "can_edit_folder_properties" in kwargs:
+        shared_with["can_edit_folder_properties"] = kwargs["can_edit_folder_properties"]
+    if "can_edit_folder_contents" in kwargs:
+        shared_with["can_edit_folder_contents"] = kwargs["can_edit_folder_contents"]
 
     # Add shared_options to the payload if it has any keys:
     if shared_options:
-        payload['shared_options'] = shared_options
+        payload["shared_options"] = shared_options
 
     # Add shared_with to shared_options if it has any keys:
     if shared_with:
-        payload['shared_options']['shared_with'] = shared_with
+        payload["shared_options"]["shared_with"] = shared_with
 
     # Pluck the folder guid and place it in params so call_api() can format the URL:
     params = {"guid": folder_guid}
 
     # And finally, make the API call:
     return call_api(
-        key=key, module="folders", endpoint="edit_folder", post_data=payload, params=params
+        key=key,
+        module="folders",
+        endpoint="edit_folder",
+        post_data=payload,
+        params=params,
     ).status_code
