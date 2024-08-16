@@ -115,3 +115,69 @@ key = '<API_KEY>'
     "companies_count": 0
 }
 ```
+
+### Delete a Folder API
+
+```delete_folder``` lets you delete a folder.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` | ✅ |
+
+
+Returns an HTTP ```204``` if successful.
+
+
+### Edit Folder API
+
+```edit_folder``` lets you edit various folder properties.
+
+>**Head's Up!:** The API expects a ```shared_options``` parameter that is a dictionary containing various ```bool```, ```list```, ```str``` and ```dict``` values. You pass these arguments individually to the function and the function will build the dictionary for you. For example, to pass ```shared_options['is_shared'] = True```, you would pass ```is_shared=True``` to ```edit_folder()```.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` | ✅ |
+| ```name``` | ```str``` | ❌ |
+| ```content_expiry_days``` | ```int``` | ❌ |
+| ```description``` | ```str``` | ❌ |
+| ```is_shared``` | ```bool``` | ❌ |
+| ```shared_with_all_users``` | ```bool``` | ❌ |
+| ```email``` | ```str``` | ❌ |
+| ```can_edit_folder_properties``` | ```bool``` | ❌ |
+| ```can_edit_folder_contents``` | ```bool``` | ❌ |
+| ```group_can_edit_contents``` | ```bool``` | ❌ |
+| ```group_can_edit_properties``` | ```bool``` | ❌ |
+
+Returns the following int:
+
+| Return | Description |
+| -- | -- |
+| ```200``` | Folder edited successfully. |
+| ```401``` | Unauthorized. |
+| ```404``` | Folder not found. |
+
+**Example Request:**
+
+```py
+
+result = folders.edit_folder(
+  key=key,
+  folder_guid='11111111-1111-1111-1111-111111111111',
+  name='Test Folder (Edited)',
+  description='This is a test folder that has been edited.',
+  content_expiry_days=2,
+  is_shared=True,
+  shared_with_all_users=True,
+  email='my.email@company.com',
+  can_edit_folder_properties=True,
+  group_can_edit_contents=True
+)
+```
+
+**Example Output:**
+
+```bash
+200
+```

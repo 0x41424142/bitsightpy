@@ -459,6 +459,22 @@ CALL_SCHEMA = frozendict(
                 "method": ["POST"],
                 "pagination": False,
             },
+            "delete_folder": {
+                "endpoint": "ratings/v1/folders/{guid}",
+                "params": ["guid"],
+                "post_data": {},
+                "use_requests_json_for_post": False,
+                "method": ["DELETE"],
+                "pagination": False,
+            },
+            "edit_folder": {
+                "endpoint": "ratings/v1/folders/{guid}",
+                "params": ["guid"],
+                "post_data": ["name", "description", "content_expiry_days", "description", "is_shared", "shared_with_all_users", "email", "can_edit_folder_properties", "can_edit_folder_contents", "group_can_edit_contents", "group_can_edit_properties", "shared_options"],
+                "use_requests_json_for_post": True,
+                "method": ["PATCH"],
+                "pagination": False,
+            },
         },
         "companies": {
             "get_company_details": {
