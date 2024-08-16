@@ -133,7 +133,7 @@ Returns an HTTP ```204``` if successful.
 
 ```edit_folder``` lets you edit various folder properties.
 
->**Head's Up!:** The API expects a ```shared_options``` parameter that is a dictionary containing various ```bool```, ```list```, ```str``` and ```dict``` values. You pass these arguments individually to the function and the function will build the dictionary for you. For example, to pass ```shared_options['is_shared'] = True```, you would pass ```is_shared=True``` to ```edit_folder()```.
+>**Head's Up!:** The API expects a ```shared_options``` parameter that is a dictionary containing various values. You pass these values individually to ```edit_folder``` as kwargs and the function will build the dictionary for you. For example, to pass ```shared_options['is_shared'] = True```, you would pass ```is_shared=True``` to ```edit_folder()```.
 
 | Arg | Data Type | Required |
 | -- | -- | -- |
