@@ -67,3 +67,51 @@ key = '<API_KEY>'
   }
 ]
 ```
+
+### Create a New Folder API
+
+```create_folder``` lets you create a new folder. Folders can be used to organize your portfolio to better understand the security performance of certain groups of companies, such as IT vendors.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```name``` | ```str``` | ✅ |
+| ```description``` | ```str``` | ❌ |
+| ```content_expiry_days``` | ```int``` | ❌ |
+
+**Example Output:**
+
+```json
+{
+    "guid": "11111111-1111-1111-1111-111111111111",
+    "name": "Test Folder",
+    "owner": "some.dude@somecompany.com",
+    "owner_guid": "22222222-2222-2222-2222-222222222222s",
+    "content_expiry_days": 1,
+    "description": "This is a test folder.",
+    "contains_all_companies": false,
+    "order": 537440,
+    "companies": [],
+    "territories": [],
+    "is_my_company": false,
+    "is_selected": false,
+    "is_deletable": true,
+    "customer_global": false,
+    "can_edit_properties": true,
+    "shared_options": {
+        "is_shared": false,
+        "user_can_share": true,
+        "shared_with_all_customer_users": false,
+        "shared_with_all_users": false,
+        "group_can_edit_contents": false,
+        "group_can_edit_properties": false,
+        "shared_with": [],
+        "shared_with_groups": [],
+        "user_can_edit_contents": true
+    },
+    "subscription_type": null,
+    "email_enabled": false,
+    "content_subscription_types": [],
+    "companies_count": 0
+}
+```

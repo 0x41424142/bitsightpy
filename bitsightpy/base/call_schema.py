@@ -451,6 +451,14 @@ CALL_SCHEMA = frozendict(
                 "method": ["GET"],
                 "pagination": False,
             },
+            "create_folder": {
+                "endpoint": "ratings/v1/folders",
+                "params": [],
+                "post_data": ["name", "description", "content_expiry_days"],
+                "use_requests_json_for_post": True,
+                "method": ["POST"],
+                "pagination": False,
+            },
         },
         "companies": {
             "get_company_details": {
