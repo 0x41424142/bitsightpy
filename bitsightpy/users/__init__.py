@@ -11,4 +11,6 @@ from .calls import (
     turn_on_2fa,
     resend_activation,
     reset_2fa,
+    get_quota,
+    get_company_views
 )

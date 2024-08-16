@@ -329,3 +329,407 @@ def bulk_manage_ids(key: str, **kwargs) -> dict:
         key=key, module="portfolio", endpoint="bulk_manage_ids", post_data=post_data
     ).json()
 
+def portfolio_api_filters(key: str, **kwargs) -> dict:
+    """
+    Get infections, open ports, vulnerabilities, and stats about both present in your portfolio.
+    
+    Args:
+        key (str): The API token to use for authentication.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        exclude_alerts_only (bool): Exclude companies with only alerts subscriptions.
+        fields (Literal['vulnerabilities', 'open_ports', 'infections']): Filter by field.
+        folder (str): Filter by folder GUID. See https://help.bitsighttech.com/hc/en-us/articles/360020042473-GET-Folder-Details
+        format (str): Format the response. ⚠️ SDK force-sets this to 'json' and is not changable.
+        quarters_back (int): The number of business quarters to include in the response from today.
+        rating_date (str): The date to pull ratings from. Formatted as YYYY-MM-DD.
+        show_event_evidence (bool): Show only companies that have enhanced event evidence enabled.
+        show_ipspace (bool): Show only companies with visible IP space.
+        tier (list[str]): Filter by tier guids. See https://help.bitsighttech.com/hc/en-us/articles/360021083694-GET-Tiers
+    """
+
+    kwargs['format'] = 'json'
+
+    return call_api(
+        key=key, module="portfolio", endpoint="portfolio_api_filters", params=kwargs
+    ).json()
+
+def portfolio_unique_identifiers(key: str) -> list:
+    """
+    Get a list of unique identifiers for companies and countries in your portfolio.
+
+    Args:
+        key (str): The API token to use for authentication.
+
+    Returns:
+        list: A list of unique identifiers.
+    """
+
+    return call_api(
+        key=key, module="portfolio", endpoint="portfolio_unique_identifiers"
+    ).json()
+
+def get_portfolio_products(key: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+    """
+    Get a list of products and product types in your portfolio.
+
+    Args:
+        key (str): The API token to use for authentication.
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        fields (str): Include these comma-separated fields in the response. Example: "product_name,product_types"
+        limit (int): The number of results to return. Defaults to 100.
+        offset (int): The number of results to skip. Defaults to 0.
+        q (str): Full text search on all fields.
+        sort (str): Sort by field. Example: "product_name"
+
+    Returns:
+        list[dict]: JSON containing the API response.
+    """
+
+    # Check that page_count is valid
+    if page_count != "all" and type(page_count) != int and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    while True:
+        response = call_api(
+            key=key, module="portfolio", endpoint="get_portfolio_products", params=kwargs
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                kwargs[param] = new_params[param]
+
+    return responses
+
+def get_product_usage(key: str, guid: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+    """
+    Get a list of companies using a specific product.
+
+    Args:
+        key (str): The API token to use for authentication.
+        guid (str): The GUID of the product to get usage for. See https://help.bitsighttech.com/hc/en-us/articles/360011948334-GET-Products-of-a-Company
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        fields (str): Include these comma-separated fields in the response. Example: "company_name,company_guid"
+        limit (int): The number of results to return. Defaults to 100.
+        offset (int): The number of results to skip. Defaults to 0.
+        q (str): Full text search on all fields.
+        sort (str): Sort by field. Example: "company_name"
+
+    Returns:
+        list[dict]: JSON containing the API response.
+    """
+
+        # Check that page_count is valid
+    if page_count != "all" and type(page_count) != int and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    while True:
+        response = call_api(
+            key=key, module="portfolio", endpoint="get_product_usage", params=kwargs
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                kwargs[param] = new_params[param]
+
+    return responses
+
+def get_product_types(key: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+    """
+    Get a list of companies using a specific product.
+
+    Args:
+        key (str): The API token to use for authentication.
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        fields (str): Include these comma-separated fields in the response. Example: "company_name,company_guid"
+        limit (int): The number of results to return. Defaults to 100.
+        offset (int): The number of results to skip. Defaults to 0.
+        q (str): Full text search on all fields.
+        sort (str): Sort by field. Example: "company_name"
+
+    Returns:
+        list[dict]: JSON containing the API response.
+    """
+
+        # Check that page_count is valid
+    if page_count != "all" and type(page_count) != int and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    while True:
+        response = call_api(
+            key=key, module="portfolio", endpoint="get_product_types", params=kwargs
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                kwargs[param] = new_params[param]
+
+    return responses
+
+def get_service_providers(key: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+    """
+    Get a list service providers in your account.
+
+    Args:
+        key (str): The API token to use for authentication.
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        fields (str): Include these comma-separated fields in the response. Example: "company_name,company_guid"
+        limit (int): The number of results to return. Defaults to 100.
+        offset (int): The number of results to skip. Defaults to 0.
+        q (str): Full text search on all fields.
+        sort (str): Sort by field. Example: "company_name"
+
+    Returns:
+        list[dict]: JSON containing the API response.
+    """
+
+        # Check that page_count is valid
+    if page_count != "all" and type(page_count) != int and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    while True:
+        response = call_api(
+            key=key, module="portfolio", endpoint="get_service_providers", params=kwargs
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                kwargs[param] = new_params[param]
+
+    return responses
+
+def get_service_provider_dependents(key: str, guid: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+    """
+    Get a list of companies dependent on a specific service provider.
+
+    Args:
+        key (str): The API token to use for authentication.
+        guid (str): The guid of the service provider to get dependents for. See https://help.bitsighttech.com/hc/en-us/articles/360011817254-GET-Service-Providers-for-a-Specific-Domain
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        fields (str): Include these comma-separated fields in the response. Example: "company_name,company_guid"
+        limit (int): The number of results to return. Defaults to 100.
+        offset (int): The number of results to skip. Defaults to 0.
+        q (str): Full text search on all fields.
+        sort (str): Sort by field. Example: "company_name"
+
+    Returns:
+        list[dict]: JSON containing the API response.
+    """
+
+        # Check that page_count is valid
+    if page_count != "all" and type(page_count) != int and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    kwargs['guid'] = guid
+
+    while True:
+        response = call_api(
+            key=key, module="portfolio", endpoint="get_service_provider_dependents", params=kwargs
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                kwargs[param] = new_params[param]
+
+    return responses
+
+def get_service_provider_products(key: str, guid: str, page_count: Union[int, 'all'] = 'all', **kwargs) -> list[dict]:
+    """
+    Get a list of companies using a specific product.
+
+    Args:
+        key (str): The API token to use for authentication.
+        guid (str): the guid of the service provider to get products for. See https://help.bitsighttech.com/hc/en-us/articles/360011817254-GET-Service-Providers-for-a-Specific-Domain
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        relationship_type (Literal['bitsight', 'self' 'none']): Filter by relationship type.
+        fields (str): Include these comma-separated fields in the response. Example: "company_name,company_guid"
+        limit (int): The number of results to return. Defaults to 100.
+        offset (int): The number of results to skip. Defaults to 0.
+        q (str): Full text search on all fields.
+        sort (str): Sort by field. Example: "company_name"
+
+    Returns:
+        list[dict]: JSON containing the API response.
+    """
+
+        # Check that page_count is valid
+    if page_count != "all" and type(page_count) != int and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    kwargs['guid'] = guid
+
+    while True:
+        response = call_api(
+            key=key, module="portfolio", endpoint="get_service_provider_products", params=kwargs
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                kwargs[param] = new_params[param]
+
+    return responses
+
+def get_security_rating_company_details(key: str, **kwargs) -> list[dict]:
+    """
+    Get security rating details of the companies in your portfolio. Also includes the guids of the companies.
+
+    Args:
+        key (str): The API token to use for authentication.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        expand (Literal['rating_details']): Expand the response. MUST be set to: "rating_details"
+        period (Literal['daily', 'monthly', 'latest']): Filter by period.
+        start_date (str): Filter by start date. Formatted as YYYY-MM-DD.
+        end_date (str): Filter by end date. Formatted as YYYY-MM-DD.
+
+    Returns:
+        list[dict]: JSON containing the API response.
+
+    Raises:
+        HTTPError: If the request fails, usually due to the expand kwarg asking for too much data.
+    """
+
+    return call_api(
+        key=key, module="portfolio", endpoint="get_security_rating_company_details", params=kwargs
+    ).json()
+
+def get_security_rating_country_details(key: str, **kwargs) -> list[dict]:
+    """
+    Get security rating details of the countries in your portfolio. Also includes the guids of the countries.
+
+    Args:
+        key (str): The API token to use for authentication.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        expand (Literal['rating_details']): Expand the response. MUST be set to: "rating_details"
+        period (Literal['daily', 'monthly', 'latest']): Filter by period.
+        start_date (str): Filter by start date. Formatted as YYYY-MM-DD.
+        end_date (str): Filter by end date. Formatted as YYYY-MM-DD.
+
+    Returns:
+        list[dict]: JSON containing the API response.
+
+    Raises:
+        HTTPError: If the request fails, usually due to the expand kwarg asking for too much data.
+    """
+
+    return call_api(
+        key=key, module="portfolio", endpoint="get_security_rating_country_details", params=kwargs
+    ).json()

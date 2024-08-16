@@ -19,6 +19,7 @@ key = '<API_KEY>'
 | Arg | Data Type | Required |
 | -- | -- | -- |
 | ```key``` | ```str``` | ✅ |
+| ```page_count``` | ```Union[int >= 1, 'all']``` = ```'all'``` | ❌ |
 | ```fields``` | ```str ``` | ❌ |
 | ```format ``` | ```str``` | ❌ |
 | ```limit``` | ```int``` = 100 | ❌ |
@@ -235,4 +236,190 @@ result = bitsightpy.portfolio.bulk_manage_ids(
   ]
 }
 ```
+
+### Get Portfolio API Filters
+
+```portfolio_api_filters``` gets infections, open ports, and vulnerabilities in your portfolio.
+
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```exclude_alerts_only``` | ```bool``` | ❌ |
+| ```fields``` | ```list[Literal['vulnerabilities', 'open_ports', 'infections']]``` | ❌ |
+| ```format``` | ```str``` as a folder guid | ❌ |
+| ```quarters_back``` | ```int``` | ❌ |
+| ```rating_date``` | ```str``` formatted as YYYY-MM-DD | ❌ |
+| ```show_event_evidence``` | ```bool``` | ❌ |
+| ```show_ips``` | ```bool``` | ❌ |
+| ```tier``` | ```list[str]``` where ```str``` is a tier guid OR ```Literal['untiered']``` for untiered companies | ❌ |
+
+### Get Portfolio Unique Identifers API
+
+```portfolio_unique_identifiers``` returns a list of company or country unique identifiers in your portfolio.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+
+
+### Get Portfolio Products API
+
+```get_portfolio_products``` Returns a list of products used by companies in your portfolio.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```page_count``` | ```Union[int >= 1, 'all']``` = ```'all'``` | ❌ |
+| ```fields``` | ```str ``` | ❌ |
+| ```format ``` | ```str``` | ❌ |
+| ```limit``` | ```int``` = 100 | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+### Get Product Usage API
+
+```get_product_usage``` returns a list of 3rd parties that use a particular product.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```guid``` | ```str``` as a product guid | ✅ |
+| ```page_count``` | ```Union[int >= 1, 'all']``` = ```'all'``` | ❌ |
+| ```fields``` | ```str ``` | ❌ |
+| ```format ``` | ```str``` | ❌ |
+| ```limit``` | ```int``` = 100 | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+### Get Product Types API
+
+```get_product_types``` Returns a list of product types used by 3rd parties in your portfolio.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```page_count``` | ```Union[int >= 1, 'all']``` = ```'all'``` | ❌ |
+| ```fields``` | ```str ``` | ❌ |
+| ```format ``` | ```str``` | ❌ |
+| ```limit``` | ```int``` = 100 | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+### Get Service Providers API
+
+```get_service_providers``` Returns service providers in your portfolio.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```page_count``` | ```Union[int >= 1, 'all']``` = ```'all'``` | ❌ |
+| ```fields``` | ```str ``` | ❌ |
+| ```format ``` | ```str``` | ❌ |
+| ```limit``` | ```int``` = 100 | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+### Get Companies Dependent on a Specific Service Provider API
+
+```get_service_provider_dependents``` Returns a list of companies that rely on a specific service provider.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```guid``` | ```str``` as a provider guid | ✅ |
+| ```page_count``` | ```Union[int >= 1, 'all']``` = ```'all'``` | ❌ |
+| ```fields``` | ```str ``` | ❌ |
+| ```format ``` | ```str``` | ❌ |
+| ```limit``` | ```int``` = 100 | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+### Get Service Provider Products in Your Portfolio
+
+```get_service_provider_products``` Returns a list of products by a specific service provider that are in your portfolio.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```guid``` | ```str``` as a provider guid | ✅ |
+| ```relationship_type``` | ```Literal['bitsight', 'self', 'none']``` | ❌ |
+| ```page_count``` | ```Union[int >= 1, 'all']``` = ```'all'``` | ❌ |
+| ```fields``` | ```str ``` | ❌ |
+| ```format ``` | ```str``` | ❌ |
+| ```limit``` | ```int``` = 100 | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+
+### Get Security Rating Details of Companies API
+
+```get_security_rating_company_details``` returns a list of security rating details for companies in your portfolio. Includes the unique identifiers of the companies.
+
+>**Head's Up!:** This API endpoint will return an HTTP 413 error if the amount of data the server has to process to fulfill your request is deemed to be too much
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```expand``` | ```Literal['rating_details']``` ⚠️ Will cause an HTTP 413 error if you request too much data! | ❌ |
+| ```period``` | ```Literal['daily', 'monthly', 'latest']``` | ❌ |
+| ```start_date``` | ```str``` formatted like ```YYYY-MM-DD``` | ❌ |
+| ```end_date``` | ```str``` formatted like ```YYYY-MM-DD``` | ❌ |
+
+**Example Response:**
+
+```json
+[
+  {
+    "guid": "12345678-1234-1234-1234-111111111111",
+    "name": "Some Company",
+    "ratings": [
+      {
+        "date": "2023-09-01",
+        "rating": 700,
+        "percentile": 30,
+        "risk_vectors": [
+          {
+            "name": "Botnet Infections",
+            "rating": 800,
+            "grade": "A",
+            "percentile": 100
+          },
+          {
+            "name": "Spam Propagation",
+            "rating": 820,
+            "grade": "A",
+            "percentile": 100
+          }
+          // ...
+        ]
+      }
+      // ...
+    ]
+  }
+  // ...
+]
+```
+
+### Get Security Rating Details of Countries API
+
+`````` returns a list of security rating details for countries in your portfolio. Includes the unique identifiers of the countries.
+
+>**Head's Up!:** This API endpoint will return an HTTP 413 error if the amount of data the server has to process to fulfill your request is deemed to be too much
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```expand``` | ```Literal['rating_details']``` ⚠️ Will cause an HTTP 413 error if you request too much data! | ❌ |
+| ```period``` | ```Literal['daily', 'monthly', 'latest']``` | ❌ |
+| ```start_date``` | ```str``` formatted like ```YYYY-MM-DD``` | ❌ |
+| ```end_date``` | ```str``` formatted like ```YYYY-MM-DD``` | ❌ |
+
+**Example Response:**
 

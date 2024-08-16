@@ -19,7 +19,7 @@ key = '<API_KEY>'
 | Arg | Data Type | Required |
 | -- | -- | -- |
 | ```key``` | ```str``` | ✅ |
-| ```page_count``` | ```Union[int >= 1, 'all'] = 'all'``` | ❌ |
+| ```page_count``` | ```Union[int >= 1, 'all']``` = ```'all'``` | ❌ |
 | ```limit``` | ```int >= 1 = 100``` | ❌ |
 | ```offset``` | ```int >=1 = 100``` | ❌ |
 | ```q``` | ```str``` | ❌ |
@@ -117,3 +117,22 @@ key = '<API_KEY>'
 | -- | -- | -- |
 | ```key``` | ```str``` | ✅ |
 | ```guid``` | ```str``` | ✅ |
+
+### Get Subscription Quota API
+
+```get_quota``` returns information on how many active, inactive, total & remaining users you have in your subscription.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+
+### Get User's Company Views API
+
+```get_company_views``` returns the company viewing history of an account by guid, including companies that have been viewed recently or most often.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```user_guid``` | ```str``` as a user's guid | ✅ |
+| ```days_back``` | ```int``` <= 365 | ❌ |
+| ```folder``` | ```str``` as a folder's guid | ❌ |

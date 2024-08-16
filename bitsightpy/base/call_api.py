@@ -44,7 +44,7 @@ def call_api(
         raise ValueError(f"Invalid module: {module}")
 
     # Make sure endpoint is a valid endpoint in the schema
-    if module != "get_endpoints" and endpoint not in CALL_SCHEMA[module].keys():
+    if endpoint not in CALL_SCHEMA[module].keys():
         raise ValueError(
             f"Invalid endpoint for module {module}: {endpoint}. Acceptable endpoints are {CALL_SCHEMA[module].keys()}"
         )
@@ -86,11 +86,7 @@ def call_api(
 
     base_url = "https://api.bitsighttech.com/"
     auth_token = (key, "")
-    url = (
-        base_url + CALL_SCHEMA[module][endpoint]["endpoint"]
-        if module != "get_endpoints"
-        else base_url
-    )
+    url = base_url + CALL_SCHEMA[module][endpoint]["endpoint"]
 
     # Special case for endpoints that have dynamic URL structure, such as get_user_details with {guid}
     if "{guid}" in url:
@@ -107,11 +103,7 @@ def call_api(
 
     # Create the request object
     response = request(
-        method=(
-            override_method or CALL_SCHEMA[module][endpoint]["method"][0]
-            if module != "get_endpoints"
-            else "GET"
-        ),
+        method=override_method or CALL_SCHEMA[module][endpoint]["method"][0],
         url=url,
         params=params,
         data=post_data if not use_requests_json_for_post else None,
