@@ -22,3 +22,12 @@ users = get_users(key)
 | ```portfolio``` | ✅ Fully Implemented |
 | ```companies``` | 🏗️ In Progress |
 | ```folders``` | 🏗️ In Progress |
+
+
+# Disclaimer
+
+This SDK tool is an independent project and is not an official product of Bitsight. It has been developed and maintained solely by the names listed in the GitHub contributors list. Bitsight has neither endorsed nor approved this SDK.
+
+Users of this SDK are advised to use it at their own risk and discretion.
+
+For official tools and support, please refer to the [official Bitsight resources and documentation](https://help.bitsighttech.com/hc/en-us).

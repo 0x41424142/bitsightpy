@@ -120,3 +120,30 @@ You can use ```bitsightpy.portfolio.get_details()``` to get a list of companies 
   "related_companies":[ ]
 }
 ```
+
+### Get Findings Statistics API
+
+```get_findings_statistics``` returns stats on findings for a specific company.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a company guid | ✅ |
+| ```fields``` | ```list[str]``` (include specific fields in the output) | ❌ |
+| ```expand``` | ```str``` such as ```'first_seen_count```, ```first_seen```, ```last_seen_count```, ```resolved_count```, ```active_count```. ⚠️ ONLY VALID IF YOUR SUBSCRIPTION HAS ATTACK SURFACE ANALYTICS ENABLED. | ❌ |
+
+**Example Output:**
+
+```json
+[
+  {
+    "start_date": "2022-12-01",
+    "end_date": "2023-01-01",
+    "count": 47,
+    "first_seen_count": 1
+    "last_seen_count": 1,
+    "active_count": 0,
+    "resolved_count": 0
+  }
+]
+```
