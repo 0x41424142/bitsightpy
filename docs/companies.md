@@ -180,3 +180,195 @@ You can use ```bitsightpy.portfolio.get_details()``` to get a list of companies 
   ]
 }
 ```
+
+### Get Country Details API
+
+```get_country_details``` pulls 1 year of Bitsight data on an entity.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```guid``` | ```str``` as a company or country guid | ✅ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_country_details(
+  key=api_token,
+  guid='country_guid'
+)
+```
+
+**Example Response:**
+
+```json
+{
+  "guid": "11111111-1111-1111-1111-111111111111",
+  "custom_id": null,
+  "name": "Name",
+  "description": " ",
+  "ipv4_count": 0,
+  "people_count": 1234567,
+  "industry": null,
+  "homepage": null,
+  "primary_domain": null,
+  "type": "COUNTRY",
+  "display_url": null,
+  "rating_details": {
+    […]
+  },
+  "ratings": [
+    […]
+  ],
+  "search_count": 0,
+  "subscription_type": "Countries",
+  "subscription_type_key": "countries",
+  "subscription_end_date": null,
+  "confidence": "LOW",
+  "bulk_email_sender_status": "NONE",
+  "service_provider": false,
+  "customer_monitoring_count": 3
+}
+```
+
+### Get Assets API
+
+```get_assets``` returns a company's asset information (domains & IPs), including asset importance and number of findings.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a company guid | ✅ |
+| ```page_count``` | ```Union[int, 'all']``` = ```'all'``` Number of pages to return. Defaults to 'all' | ❌ |
+| ```limit``` | ```int``` = 100 (number of assets to return per page) | ❌ |
+| ```offset``` | ```int``` = 100 (number of assets to skip) | ❌ |
+| ```q``` | ```str``` (search query) | ❌ |
+| ```sort``` | ```str``` | ❌ |
+| ```asset``` | ```str``` as a domain name | ❌ |
+| ```combined_overrides_importance``` | ```str``` as a comma-separated string of importances. Example: "medium,none" | ❌ |
+| ```expand``` | ```Literal['tag_details', 'delegated_security_controls']```. Can be a comma-separated string of the two options. | ❌ |
+| ```findings_total_count``` | ```int``` | ❌ |
+| ```findings__total_count_lt``` | ```int``` | ❌ |
+| ```findings__total_count_gt``` | ```int``` | ❌ |
+| ```findings__total_count_lte``` | ```int``` | ❌ |
+| ```findings__total_count_gte``` | ```int``` | ❌ |
+| ```hosted_by_isnull``` | ```bool``` | ❌ |
+| ```importance_categories``` | ```str``` as a comma-separated string of importance categories. Example: "critical,high" | ❌ |
+| ```importance_overrides``` | ```str``` as a comma-separated string of importances. Example: "medium,none" | ❌ |
+| ```ip_address``` | ```Union[str, ipaddress.IPv4Address]``` | ❌ |
+| ```is_ip``` | ```bool``` (True = only return IP addresses, False = only return domains) | ❌ |
+| ```origin_subsidiary_isnull``` | ```bool``` | ❌ |
+| ```overrides_isnull``` | ```bool``` | ❌ |
+| ```tags_contains``` | ```list[str]``` Example: ["tag1", "tag2"] | ❌ |
+| ```tags_isnull``` | ```bool``` | ❌ |
+
+
+The following kwargs are only valid if your subscription has Attack Surface Analytics enabled:
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```countries``` | ```str``` as a comma-separated string of country names. Example: "Canada,Mexico" | ❌ |
+| ```country_codes``` | ```str``` as a comma-separated string of country codes. Example: "US,CA" | ❌ |
+| ```hosted_by_guid``` | ```str``` as a service provider guid (See ```portfolio.get_service_providers```) | ❌ |
+| ```origin_subsidiary_guid``` | ```str``` as an entity guid (See ```portfolio.get_ratings_tree```) | ❌ |
+| ```product_name-version``` | ```str``` as a comma separated string of product ```name:version``` pairs (None = unspecified version, Empty = all versions) | ❌ |
+| ```product_support``` | ```Literal['current-package', 'current-version', 'incomplete_version', 'obsolete-os-release', 'obsolete-package', 'obsolete-version', 'possible-backports', 'unknown', 'unknown-patch-status]``` | ❌ |
+| ```product_vendor``` | ```str``` as a service provider guid (See ```portfolio.get_service_providers```) | ❌ |
+| ```services``` | ```str``` as a comma-separated string of service names. | ❌ |
+| ```threat_evidence_certainty``` | ```str ['Possible', 'Likely' 'Confirmed']``` as a comma-separated string. | ❌ |
+| ```threat_exposure_detection``` | ```str ['Currently', 'Previously']``` as a comma-separated string. | ❌ |
+| ```threat_guid``` | ```str``` as a vulnerability guid. | ❌ |
+| ```threat_severity_level``` | ```str ['minor', 'moderate', 'material', 'severe']``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_assets(
+  key=api_token,
+  company_guid='company_guid',
+)
+```
+
+**Example Output:**
+
+```json
+[
+    […]
+    {
+      "temporary_id":"tN0i7cUlKZ2e3df1d478e1f9d6da100069f0740915e3896db99bdd2f029566e140671c1683",
+      "asset":"12.3.456.789",
+      "asset_type":"IP",
+      "identifier":null,
+      "app_grade":null,
+      "ip_addresses":[
+        "11.2.333.444"
+      ],
+      "country_code":"A1",
+      "country":"Demo Country 1",
+      "hosted_by":{
+        "guid":"a5e23bf0-38d4-4cea-aa50-19ee75da481d",
+        "name":"Fake Company Technologies"
+      },
+      "importance":0.0,
+      "importance_category":"low",
+      "longitude":-123.1234,
+      "latitude":12.1234,
+      "is_ip":true,
+      "services":[
+        "HTTP",
+        "HTTPS"
+      ],
+      "origin_subsidiary":{
+        "guid":"13b3c162-e597-46da-bac9-7dde651a9b2c",
+        "name":"Demo, Inc."
+      },
+      "findings":{
+        "total_count":3,
+        "counts_by_severity":{
+          "severe":0,
+          "material":0,
+          "moderate":0,
+          "minor":3
+        }
+      },
+      "threats":{
+        "rolledup_observation_ids":[
+          "12345AAbA6Abb_bAAAA7bb==",
+          "AAAAbA12bAbAAAbAAbbbbb=="
+        ],
+        "evidence_keys":[
+          "Android 10 / Chrome Mobile WebView 113.0.5672",
+          […]
+        ]
+      },
+      "tags":[
+        "Guest WiFi",
+        "Corporate Network"
+      ],
+      "tag_details":[
+        {
+          "guid":"ae87bc30-a3ab-45f7-809f-61ec36978685",
+          "name":"Data Center 1",
+          "is_inherited":false,
+          "is_public":true
+        }
+      ],
+      "overrides":{
+        "importance":null
+      },
+      "combined_overrides":{
+        "importance":"low"
+      },
+      "products":[
+        {
+          "type":"application",
+          "vendor":"examplecompany",
+          "product":"productname",
+          "version":null,
+          "support":"unknown"
+        }
+      ],
+      "is_monitored":false
+    }
+  ]
+```
