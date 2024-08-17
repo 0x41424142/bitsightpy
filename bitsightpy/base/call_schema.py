@@ -470,7 +470,7 @@ CALL_SCHEMA = frozendict(
             "edit_folder": {
                 "endpoint": "ratings/v1/folders/{guid}",
                 "params": ["guid"],
-                "post_data": [
+                "post_data": [ # Can be refactored at some point. See manage_shared_folder_perms for a framework.
                     "name",
                     "description",
                     "content_expiry_days",
@@ -484,6 +484,14 @@ CALL_SCHEMA = frozendict(
                     "group_can_edit_properties",
                     "shared_options",
                 ],
+                "use_requests_json_for_post": True,
+                "method": ["PATCH"],
+                "pagination": False,
+            },
+            "manage_shared_folder_perms": {
+                "endpoint": "ratings/v1/folders/{guid}",
+                "params": ["guid"],
+                "post_data": ["shared_options"],
                 "use_requests_json_for_post": True,
                 "method": ["PATCH"],
                 "pagination": False,

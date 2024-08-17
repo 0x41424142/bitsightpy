@@ -133,7 +133,7 @@ Returns an HTTP ```204``` if successful.
 
 ```edit_folder``` lets you edit various folder properties.
 
->**Head's Up!:** The API expects a ```shared_options``` parameter that is a dictionary containing various values. You pass these values individually to ```edit_folder``` as kwargs and the function will build the dictionary for you. For example, to pass ```shared_options['is_shared'] = True```, you would pass ```is_shared=True``` to ```edit_folder()```.
+>**Head's Up!:** This endpoint accepts multiple ```email```, ```can_edit_folder_properties``` and ```can_edit_folder_contents``` kwargs, specified like: ```email[X]```, ```can_edit_folder_properties[X]``` and ```can_edit_folder_contents[X]``` where X is an integer. This process is done to build the JSON payload the API endpoint expects dynamically and to save the user from crafting a list of dictionaries to pass in as a kwarg. See the example request below for more details.
 
 | Arg | Data Type | Required |
 | -- | -- | -- |
@@ -144,9 +144,9 @@ Returns an HTTP ```204``` if successful.
 | ```description``` | ```str``` | ❌ |
 | ```is_shared``` | ```bool``` | ❌ |
 | ```shared_with_all_users``` | ```bool``` | ❌ |
-| ```email``` | ```str``` | ❌ |
-| ```can_edit_folder_properties``` | ```bool``` | ❌ |
-| ```can_edit_folder_contents``` | ```bool``` | ❌ |
+| ```email[X]``` where X is an integer | ```str``` | ❌ |
+| ```can_edit_folder_properties[X]``` where X is an integer | ```bool``` | ❌ |
+| ```can_edit_folder_contents[X]``` where X is an integer | ```bool``` | ❌ |
 | ```group_can_edit_contents``` | ```bool``` | ❌ |
 | ```group_can_edit_properties``` | ```bool``` | ❌ |
 
@@ -169,10 +169,15 @@ result = folders.edit_folder(
   description='This is a test folder that has been edited.',
   content_expiry_days=2,
   is_shared=True,
-  shared_with_all_users=True,
+  shared_with_all_users=False,
+  # Build the permissions for the first user to be shared with:
   email='my.email@company.com',
   can_edit_folder_properties=True,
-  group_can_edit_contents=True
+  group_can_edit_contents=True,
+  # Build the permissions for the second user to be shared with:
+  email1='second.email@company.com',
+  can_edit_folder_properties1=True,
+  group_can_edit_contents1=True
 )
 ```
 
@@ -180,4 +185,90 @@ result = folders.edit_folder(
 
 ```bash
 200
+```
+
+### Manage Shared Folder Permissions API
+
+```manage_shared_folder_perms``` lets you manage user permissions for shared folders.
+
+>**Head's Up!:** You must be the folder owner to manage permissions.
+
+>**Head's Up!:** This endpoint accepts multiple ```email```, ```can_edit_folder_properties``` and ```can_edit_folder_contents``` kwargs, specified like: ```email[X]```, ```can_edit_folder_properties[X]``` and ```can_edit_folder_contents[X]``` where X is an integer. This process is done to build the JSON payload the API endpoint expects dynamically and to save the user from crafting a list of dictionaries to pass in as a kwarg. See the example request below for more details.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` | ✅ |
+| ```is_shared``` | ```bool``` | ❌ |
+| ```group_can_edit_contents``` | ```bool``` | ❌ |
+| ```shared_with_all_users``` | ```bool``` | ❌ |
+| ```email``` | ```str``` | ❌ |
+| ```can_edit_folder_contents``` | ```bool``` | ❌ |
+| ```can_edit_folder_properties``` | ```bool``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.manage_shared_folder_perms(
+    key=key,
+    folder_guid=folder_guid,
+    is_shared=True,
+    shared_with_all_users=False,
+    group_can_edit_contents=True,
+    email="email.1@company.com",
+    can_edit_folder_properties=True,
+    can_edit_folder_contents=True,
+    email1="email.2@company.com",
+    can_edit_folder_properties1=False,
+    can_edit_folder_contents1=False
+)
+```
+
+**Example Response:**
+
+```json
+{
+  "guid": "11111111-1111-1111-1111-111111111111",
+  "name": "My Folder",
+  "owner": "some.email@company.com",
+  "owner_name": "Bob Bobson",
+  "owner_guid": "11111111-1111-1111-1111-111111111111",
+  "content_expiry_days": 1,
+  "description": "My Folder Description",
+  "contains_all_companies": false,
+  "order": 1234567,
+  "companies": [],
+  "territories": [],
+  "is_my_company": false,
+  "is_selected": false,
+  "is_deletable": true,
+  "customer_global": false,
+  "can_edit_properties": true,
+  "shared_options": {
+    "is_shared": true,
+    "user_can_share": true,
+    "shared_with_all_customer_users": false,
+    "shared_with_all_users": false,
+    "group_can_edit_contents": false,
+    "group_can_edit_properties": false,
+    "shared_with": [
+      {
+        "email": "email.1@company.com",
+        "can_edit_folder_contents": true,
+        "can_edit_folder_properties": true
+      },
+      {
+        "email": "email.2@company.com",
+        "can_edit_folder_contents": false,
+        "can_edit_folder_properties": false
+      }
+    ],
+    "shared_with_groups": [],
+    "user_can_edit_contents": true
+  },
+  "subscription_type": null,
+  "email_enabled": false,
+  "content_subscription_types": [],
+  "companies_count": 0
+}
 ```
