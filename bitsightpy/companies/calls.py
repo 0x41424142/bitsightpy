@@ -2,7 +2,7 @@
 calls.py - Contains the user-facing functions for the companies API endpoints
 """
 
-from typing import Literal, Optional, Union
+from typing import Union
 
 from ..base import call_api, check_for_pagination
 
@@ -144,8 +144,12 @@ def get_assets(
     responses = []
     pulled = 0
 
+    # Account for if the user passes an ipaddress.IPV4Address object in the ip_address parameter
+    if "ip_address" in kwargs:
+        kwargs["ip_address"] = str(kwargs["ip_address"])
+
     while True:
-        kwargs["guid"] = company_guid  # account for call_api .pop-ing guid
+        kwargs["guid"] = str(company_guid)  # account for call_api .pop-ing guid
         response = call_api(
             key=key, module="companies", endpoint="get_assets", params=kwargs
         )
