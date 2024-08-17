@@ -80,9 +80,7 @@ def call_api(
         raise ValueError(f"params must be a dict, not {type(params)}")
 
     # Check if the endpoint uses request's json feature:
-    use_requests_json = CALL_SCHEMA[module][endpoint][
-        "use_requests_json"
-    ]
+    use_requests_json = CALL_SCHEMA[module][endpoint]["use_requests_json"]
 
     base_url = "https://api.bitsighttech.com/"
     auth_token = (key, "")

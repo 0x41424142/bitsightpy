@@ -279,7 +279,9 @@ def manage_shared_folder_perms(key: str, folder_guid: str, **kwargs) -> dict:
     ).json()
 
 
-def add_companies_to_folder(key: str, folder_guid: str, company_guids: list[str]) -> dict:
+def add_companies_to_folder(
+    key: str, folder_guid: str, company_guids: list[str]
+) -> dict:
     """
     Add companies to a folder.
 
@@ -306,7 +308,9 @@ def add_companies_to_folder(key: str, folder_guid: str, company_guids: list[str]
     ).json()
 
 
-def add_companies_to_folder(key: str, folder_guid: str, add_companies: Union[list[str], str]) -> dict:
+def add_companies_to_folder(
+    key: str, folder_guid: str, add_companies: Union[list[str], str]
+) -> dict:
     """
     Add companies to a folder.
 
