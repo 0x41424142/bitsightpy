@@ -135,7 +135,12 @@ def edit_folder(key: str, folder_guid: str, **kwargs) -> int:
     # Construct the shared_options object:
     shared_options = {}
 
-    for k in ["is_shared", "shared_with_all_users", "group_can_edit_contents", "group_can_edit_properties"]:
+    for k in [
+        "is_shared",
+        "shared_with_all_users",
+        "group_can_edit_contents",
+        "group_can_edit_properties",
+    ]:
         if k in kwargs:
             shared_options[k] = kwargs[k]
 
@@ -145,11 +150,21 @@ def edit_folder(key: str, folder_guid: str, **kwargs) -> int:
     # Find all the email1, email2, etc. keys and add them to shared_with:
     for k in kwargs:
         if "email" in k:
-            shared_with.append({
-                "email": kwargs[k],
-                "can_edit_folder_properties": kwargs.get(f"can_edit_folder_properties{k[-1]}") if f"can_edit_folder_properties{k[-1]}" in kwargs else kwargs.get("can_edit_folder_properties"), #account for no number
-                "can_edit_folder_contents": kwargs.get(f"can_edit_folder_contents{k[-1]}") if f"can_edit_folder_contents{k[-1]}" in kwargs else kwargs.get("can_edit_folder_contents") #account for no number
-            })
+            shared_with.append(
+                {
+                    "email": kwargs[k],
+                    "can_edit_folder_properties": (
+                        kwargs.get(f"can_edit_folder_properties{k[-1]}")
+                        if f"can_edit_folder_properties{k[-1]}" in kwargs
+                        else kwargs.get("can_edit_folder_properties")
+                    ),  # account for no number
+                    "can_edit_folder_contents": (
+                        kwargs.get(f"can_edit_folder_contents{k[-1]}")
+                        if f"can_edit_folder_contents{k[-1]}" in kwargs
+                        else kwargs.get("can_edit_folder_contents")
+                    ),  # account for no number
+                }
+            )
 
     # Add shared_options to the payload
     if shared_options:
@@ -227,11 +242,21 @@ def manage_shared_folder_perms(key: str, folder_guid: str, **kwargs) -> dict:
     # Find all the email, email1, email2, etc. keys and add them to shared_with_users:
     for k in kwargs:
         if "email" in k:
-            shared_with_users.append({
-                "email": kwargs[k],
-                "can_edit_folder_properties": kwargs.get(f"can_edit_folder_properties{k[-1]}") if f"can_edit_folder_properties{k[-1]}" in kwargs else kwargs.get("can_edit_folder_properties"), #account for no number
-                "can_edit_folder_contents": kwargs.get(f"can_edit_folder_contents{k[-1]}") if f"can_edit_folder_contents{k[-1]}" in kwargs else kwargs.get("can_edit_folder_contents") #account for no number
-            })
+            shared_with_users.append(
+                {
+                    "email": kwargs[k],
+                    "can_edit_folder_properties": (
+                        kwargs.get(f"can_edit_folder_properties{k[-1]}")
+                        if f"can_edit_folder_properties{k[-1]}" in kwargs
+                        else kwargs.get("can_edit_folder_properties")
+                    ),  # account for no number
+                    "can_edit_folder_contents": (
+                        kwargs.get(f"can_edit_folder_contents{k[-1]}")
+                        if f"can_edit_folder_contents{k[-1]}" in kwargs
+                        else kwargs.get("can_edit_folder_contents")
+                    ),  # account for no number
+                }
+            )
 
     # Add shared_options to the payload
     if shared_options:
@@ -251,4 +276,56 @@ def manage_shared_folder_perms(key: str, folder_guid: str, **kwargs) -> dict:
         endpoint="manage_shared_folder_perms",
         post_data=payload,
         params=params,
+    ).json()
+
+
+def add_companies_to_folder(key: str, folder_guid: str, company_guids: list[str]) -> dict:
+    """
+    Add companies to a folder.
+
+    Args:
+        key (str): Your BitSight API key.
+        folder_guid (str): The unique identifier of the folder.
+        company_guids (list[str]): A list of company guids to add to the folder.
+
+    Returns:
+        dict: A summary of actions taken.
+    """
+
+    payload = {"company_guids": company_guids}
+
+    params = {"guid": folder_guid}
+
+    # And finally, make the API call
+    return call_api(
+        key=key,
+        module="folders",
+        endpoint="add_companies_to_folder",
+        post_data=payload,
+        params=params,
+    ).json()
+
+
+def add_companies_to_folder(key: str, folder_guid: str, add_companies: Union[list[str], str]) -> dict:
+    """
+    Add companies to a folder.
+
+    Args:
+        key (str): Your BitSight API key.
+        folder_guid (str): The unique identifier of the folder. See get_folders() for a list of folders.
+        add_companies (Union[list[str], str]): A list of company guids or a single company guid string to add to the folder. See portfolio.get_details() for a list of companies.
+
+    Returns:
+        dict: A summary of actions taken.
+    """
+
+    if isinstance(add_companies, str):
+        add_companies = [add_companies]
+
+    return call_api(
+        key=key,
+        module="folders",
+        endpoint="add_companies_to_folder",
+        post_data={"add_companies": add_companies},
+        params={"guid": folder_guid},
     ).json()

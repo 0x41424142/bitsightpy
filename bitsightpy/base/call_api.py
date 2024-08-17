@@ -80,8 +80,8 @@ def call_api(
         raise ValueError(f"params must be a dict, not {type(params)}")
 
     # Check if the endpoint uses request's json feature:
-    use_requests_json_for_post = CALL_SCHEMA[module][endpoint][
-        "use_requests_json_for_post"
+    use_requests_json = CALL_SCHEMA[module][endpoint][
+        "use_requests_json"
     ]
 
     base_url = "https://api.bitsighttech.com/"
@@ -106,8 +106,8 @@ def call_api(
         method=override_method or CALL_SCHEMA[module][endpoint]["method"][0],
         url=url,
         params=params,
-        data=post_data if not use_requests_json_for_post else None,
-        json=post_data if use_requests_json_for_post else None,
+        data=post_data if not use_requests_json else None,
+        json=post_data if use_requests_json else None,
         headers=headers,
         auth=auth_token,
     )

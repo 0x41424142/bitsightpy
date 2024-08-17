@@ -224,7 +224,7 @@ result = bitsightpy.folders.manage_shared_folder_perms(
 )
 ```
 
-**Example Response:**
+**Example Output:**
 
 ```json
 {
@@ -270,5 +270,50 @@ result = bitsightpy.folders.manage_shared_folder_perms(
   "email_enabled": false,
   "content_subscription_types": [],
   "companies_count": 0
+}
+```
+
+### Add Companies to a Folder API
+
+```add_companies_to_folder``` adds companies to an existing folder.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```add_companies``` | ```Union[list[str], str]``` as a list of company guids or a single string company guid | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+
+**Example Request:**
+
+```py
+# Example with list value for add_companies
+result = bitsightpy.folders.add_companies_to_folder(
+  key=key,
+  folder_guid=folder_guid,
+  add_companies=["company_guid1", "company_guid2", ...]
+)
+
+# Example with single string value for add_companies:
+result = bitsightpy.folders.add_companies_to_folder(
+  key=key,
+  folder_guid=folder_guid,
+  add_companies="company_guid1"
+)
+```
+
+**Example Output**:
+
+```json
+{
+  "not_added": [
+    "company_guid1"
+  ],
+  "added": [
+    "company_guid2"
+  ],
+  "companies": [
+    "company_guids", "now_in", "the_folder", //...
+  ],
+  "detail": "<Company name with company_guid1> was added to <folder name with folder_guid>."
 }
 ```
