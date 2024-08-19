@@ -678,6 +678,14 @@ CALL_SCHEMA = frozendict(
                 "method": ["GET"],
                 "pagination": False,
             },
+            "highlight_primary": {
+                "endpoint": "ratings/v1/companies/{guid}",
+                "params": ["guid"],  # for path
+                "post_data": {"guid", "custom_id"},  # for body
+                "use_requests_json": True,
+                "method": ["PATCH"],
+                "pagination": False,
+            },
         },
     }
 )

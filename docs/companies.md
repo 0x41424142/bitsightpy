@@ -911,3 +911,35 @@ result = bitsightpy.companies.compare_client_to_underwriting_guidelines(
   ]
 }
 ```
+
+### Highlight Primary or Assign Custom ID API
+
+```highlight_primary``` highlights a company as the primary company in your portfolio. You can also assign a custom ID to a company.
+
+This API returns an HTTP status code as its output.
+
+| HTTP Code | Description |
+| -- | -- |
+| 200 | Success |
+| 400 | Bad Request - Usually due to missing parameter |
+| 401 | Unauthorized - Provided API token is invalid |
+| 403 | Forbidden - Assigned company does not exist |
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```edit_company_guid``` | ```str``` as a company guid | ✅ |
+| ```primary_company_guid``` | ```str``` as a company guid or ```null``` to delete primary status | ✅ |
+| ```custom_id``` | ```str``` (```null``` to delete ID) | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.highlight_primary(
+  key=api_token,
+  edit_company_guid='company_guid to edit',
+  primary_company_guid='company_guid to assign as primary',
+  custom_id='custom_id'
+)
+>>>200
+```

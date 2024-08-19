@@ -439,3 +439,31 @@ def compare_client_to_underwriting_guidelines(key: str, company_guid: str) -> di
         endpoint="compare_client_to_underwriting_guidelines",
         params={"guid": company_guid},
     ).json()
+
+
+def highlight_primary(
+    key: str, company_guid: str, guid: str, custom_id: str = None
+) -> int:
+    """
+    Highlight a primary organization or assign a custom ID for a portfolio company
+
+    Args:
+        key (str): Your BitSight API key.
+        company_guid (str): The guid of the company to edit.
+        guid (str): The guid of the primary organization.
+        custom_id (str, optional): A custom ID to assign to the company. Defaults to None.
+    """
+
+    # Required to check if custom_id is a string or not because None/null value will delete
+    # the custom_id from the company in the BitSight platform
+    post_data = (
+        {"guid": guid} if not custom_id else {"guid": guid, "custom_id": custom_id}
+    )
+
+    return call_api(
+        key=key,
+        module="companies",
+        endpoint="highlight_primary",
+        params={"guid": company_guid},
+        post_data=post_data,
+    ).status_code
