@@ -662,6 +662,14 @@ CALL_SCHEMA = frozendict(
                 "method": ["GET"],
                 "pagination": False,
             },
+            "get_company_requests_summary": {
+                "endpoint": "ratings/v1/companies/infrastructure/requests/summaries",
+                "params": [],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": False,
+            },
         },
     }
 )

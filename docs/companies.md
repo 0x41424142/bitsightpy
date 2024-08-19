@@ -796,3 +796,61 @@ dumps(result[0], indent=2)
   ...
 ]
 ```
+
+### Get Company Requests Summary API
+
+```get_company_requests_summary``` returns a summary of requests your company has made to Bitsight.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_company_requests_summary(
+  key=api_token,
+)
+```
+
+**Example Response:**
+
+```json
+{
+  "types":[
+    […]
+    {
+      "type":"domain"
+    }
+  ],
+  "status":[
+    […]
+    {
+      "slug":"error",
+      "name":"Error"
+    }
+  ],
+  "attributed_to":[
+    […]
+    {
+      "name":"My Company",
+      "guid":"111111111-1111-1111-1111-111111111111"
+    }
+  ],
+  "requested_by":[
+    […]
+    {
+      "name":"Lamar Jackson",
+      "guid":"88888888-0808-0808-0808-888888888888"
+    }
+  ],
+  "reasons":[
+    […]
+    {
+      "slug":"pub",
+      "name":"Publicly visible systems"
+    }
+  ]
+}
+```

@@ -18,4 +18,5 @@ from .calls import (
     get_products_in_ratings_tree,
     get_ratings_history,
     get_risk_vectors_summary,
+    get_company_requests_summary,
 )

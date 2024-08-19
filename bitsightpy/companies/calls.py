@@ -401,3 +401,21 @@ def get_risk_vectors_summary(key: str, company_guid: str) -> list[dict]:
     reader = DictReader(response.content.decode("utf-8-sig").splitlines())
 
     return list(reader)
+
+
+def get_company_requests_summary(key: str) -> dict:
+    """
+    Get a summary of requests your organization has made to Bitsight.
+
+    Args:
+        key (str): Your BitSight API key.
+
+    Returns:
+        dict: A dictionary containing the API response.
+    """
+
+    return call_api(
+        key=key,
+        module="companies",
+        endpoint="get_company_requests_summary",
+    ).json()
