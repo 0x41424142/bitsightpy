@@ -333,3 +333,62 @@ def add_companies_to_folder(
         post_data={"add_companies": add_companies},
         params={"guid": folder_guid},
     ).json()
+
+
+def remove_companies_to_folder(
+    key: str, folder_guid: str, remove_companies: Union[list[str], str]
+) -> dict:
+    """
+    Remove companies from a folder.
+
+    Args:
+        key (str): Your BitSight API key.
+        folder_guid (str): The unique identifier of the folder. See get_folders() for a list of folders.
+        remove_companies (Union[list[str], str]): A list of company guids or a single company guid string to remove from the folder. See portfolio.get_details() for a list of companies.
+
+    Returns:
+        dict: A summary of actions taken.
+    """
+
+    if isinstance(remove_companies, str):
+        remove_companies = [remove_companies]
+
+    return call_api(
+        key=key,
+        module="folders",
+        endpoint="remove_companies_from_folder",
+        post_data={"remove_companies": remove_companies},
+        params={"guid": folder_guid},
+    ).json()
+
+
+def get_findings_from_folder(
+    key: str,
+    folder_guid: str,
+    _type: str = None,
+    confidence: Literal["LOW", "HIGH"] = None,
+) -> list[dict]:
+    """
+    Get risk findings for a folder.
+
+    Args:
+        key (str): Your BitSight API key.
+        folder_guid (str): The unique identifier of the folder. See get_folders() for a list of folders.
+        _type (str, optional): The type of finding. Defaults to None.
+        confidence (Literal['LOW', 'HIGH'], optional): The confidence level of the finding. Defaults to None.
+
+    Returns:
+        list[dict]: A list of dictionaries containing finding information.
+    """
+
+    params = {"guid": folder_guid}
+
+    if _type:
+        params["type"] = _type
+
+    if confidence:
+        params["confidence"] = confidence
+
+    return call_api(
+        key=key, module="folders", endpoint="get_findings_from_folder", params=params
+    ).json()

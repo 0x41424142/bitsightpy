@@ -317,3 +317,78 @@ result = bitsightpy.folders.add_companies_to_folder(
   "detail": "<Company name with company_guid1> was added to <folder name with folder_guid>."
 }
 ```
+
+### Remove Companies from a Folder API
+
+```remove_companies_from_folder``` removes companies from an existing folder.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```remove_companies``` | ```Union[list[str], str]``` as a list of company guids or a single string company guid | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+
+**Example Request:**
+
+```py
+# Example with list value for remove_companies
+result = bitsightpy.folders.remove_companies_from_folder(
+  key=key,
+  folder_guid=folder_guid,
+  remove_companies=["company_guid1", "company_guid2", ...]
+)
+```
+
+**Example Response:**
+
+```json
+{
+  "remove_companies":[
+    "company_guid1",
+    "company_guid2"
+  ]
+}
+```
+
+### Get Findings in a Folder API
+
+```get_findings_from_folder``` gets findings for a folder.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` | ✅ |
+| ```_type``` | ```str``` | ❌ |
+| ```confidence``` | ```Literal["LOW", "HIGH"]``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_findings_from_folder(
+  key=key,
+  folder_guid=folder_guid,
+  confidence="HIGH"
+)
+```
+
+**Example Response:**
+
+
+```json
+[
+  {
+    "start_date":"2024-01-01",
+    "end_date":"2024-01-30",
+    "stats":[
+      {
+        "id":"CVE-2021-44228",
+        "name":"CVE-2021-44228",
+        "count":1,
+        "severity":"HIGH",
+        "severity_category":"HIGH",
+        "confidence":"HIGH"
+      }
+    ]
+  }
+]
+```

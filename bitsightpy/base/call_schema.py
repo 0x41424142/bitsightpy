@@ -504,6 +504,22 @@ CALL_SCHEMA = frozendict(
                 "method": ["PATCH"],
                 "pagination": False,
             },
+            "remove_companies_to_folder": {
+                "endpoint": "ratings/v1/folders/{guid}/companies",
+                "params": ["guid"],
+                "post_data": ["remove_companies"],
+                "use_requests_json": True,
+                "method": ["PATCH"],
+                "pagination": False,
+            },
+            "get_findings_from_folder": {
+                "endpoint": "ratings/v1/folders/{guid}/findings/summary",
+                "params": ["guid", "type", "confidence"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": False,
+            },
         },
         "companies": {
             "get_company_details": {

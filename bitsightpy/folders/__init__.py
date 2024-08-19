@@ -11,4 +11,6 @@ from .calls import (
     edit_folder,
     manage_shared_folder_perms,
     add_companies_to_folder,
+    remove_companies_to_folder,
+    get_findings_from_folder,
 )
