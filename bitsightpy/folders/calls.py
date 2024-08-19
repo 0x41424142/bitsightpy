@@ -392,3 +392,27 @@ def get_findings_from_folder(
     return call_api(
         key=key, module="folders", endpoint="get_findings_from_folder", params=params
     ).json()
+
+
+def get_ratings_graph_from_folder(key: str, folder_guid: str) -> dict:
+    """
+    Get ratings graph data for a folder.
+
+    Args:
+        key (str): Your BitSight API key.
+        folder_guid (str): The unique identifier of the folder. See get_folders() for a list of folders.
+
+    Returns:
+        dict: A dictionary containing the ratings graph data.
+
+    NOTE:
+        ```x``` is the date when the median rating of companies in the folder were established, as displayed in the horizontal axis of the graph on the Bitsight webpage
+        ```y``` is the median Bitsight rating of the companies in the folder, as displayed in the vertical axis of the graph on the Bitsight webpage.
+    """
+
+    return call_api(
+        key=key,
+        module="folders",
+        endpoint="get_ratings_graph_from_folder",
+        params={"guid": folder_guid},
+    ).json()

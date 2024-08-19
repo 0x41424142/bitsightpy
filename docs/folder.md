@@ -392,3 +392,37 @@ result = bitsightpy.folders.get_findings_from_folder(
   }
 ]
 ```
+
+### Get Ratings Graph of a Folder API
+
+```get_ratings_graph_from_folder``` gets the ratings graph for a folder.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` | ✅ |
+
+>**Head's Up!:** The response will contain a list of dictionaries with the following keys: ```y``` and ```x```. ```y``` is the median Bitsight rating of the companies in the folder, as displayed in the vertical axis of the graph on the Bitsight webpage. ```x``` is the date when the median rating of companies in the folder were established, as displayed in the horizontal axis of the graph on the Bitsight webpage.
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_ratings_graph_from_folder(
+  key=key,
+  folder_guid=folder_guid
+)
+```
+
+**Example Response:**
+
+```json
+{
+  "name":"My Folder",
+  "ratings":[
+    {
+      "y":690,
+      "x":"2024-07-22"
+    }
+  ]
+}
+```

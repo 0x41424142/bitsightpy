@@ -13,4 +13,5 @@ from .calls import (
     add_companies_to_folder,
     remove_companies_to_folder,
     get_findings_from_folder,
+    get_ratings_graph_from_folder,
 )
