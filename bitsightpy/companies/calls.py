@@ -235,3 +235,104 @@ def get_ips_by_country(key: str, country_guid: str) -> dict:
         endpoint="get_ips_by_country",
         params={"guid": country_guid},
     ).json()
+
+
+def get_nist_csf(key: str, company_guid: str) -> dict:
+    """
+    Get a high-level summary of a company's alignment with NIST CSF
+    using Bitsight risk vectors and existing evidence.
+
+    Args:
+        key (str): Your BitSight API key.
+        company_guid (str): A company guid. See ```bitsightpy.portfolio.get_details()``` for getting company guids.
+
+    Returns:
+        dict: A dictionary containing the API response.
+    """
+
+    return call_api(
+        key=key,
+        module="companies",
+        endpoint="get_nist_csf",
+        params={"guid": company_guid, "format": "json"},
+    ).json()
+
+
+def preview_report_industry_comparison(key: str, company_guid: str) -> dict:
+    """
+    Get a synopsis comparing a company's rating to industry peers.
+
+    Args:
+        key (str): Your BitSight API key.
+        company_guid (str): A company guid. See ```bitsightpy.portfolio.get_details()``` for getting company guids.
+
+    Returns:
+        dict: A dictionary containing the API response.
+    """
+
+    return call_api(
+        key=key,
+        module="companies",
+        endpoint="preview_report_industry_comparison",
+        params={"guid": company_guid, "format": "json"},
+    ).json()
+
+
+def get_products_in_ratings_tree(
+    key: str, company_guid: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
+    """
+    Get service provider products that are used by a company in a ratings tree
+
+    Args:
+        key (str): Your BitSight API key.
+        company_guid (str): A company guid. See ```bitsightpy.portfolio.get_details()``` for getting company guids.
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional keyword arguments for the API call.
+
+    :Kwargs:
+        fields (str): Comma-separated string of fields to include in the response.
+        limit (int): The number of results to return per page.
+        offset (int): The number of results to skip before returning. API handles pagination, so you don't really need to use this.
+        q (str): A full-text search query.
+        sort (str): The field to sort by. Default is 'name'. To sort in descending order, add a '-' before the field name.
+
+
+    Returns:
+        list[dict]: A list of dictionaries containing the API response.
+    """
+
+    # Check that page_count is valid
+    if page_count != "all" and type(page_count) != int and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    while True:
+        kwargs["guid"] = str(company_guid)  # account for call_api .pop-ing guid
+        response = call_api(
+            key=key,
+            module="companies",
+            endpoint="get_products_in_ratings_tree",
+            params=kwargs,
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                kwargs[param] = new_params[param]
+
+    return responses

@@ -13,4 +13,7 @@ from .calls import (
     get_asset_risk_matrix,
     get_ratings_tree,
     get_ips_by_country,
+    get_nist_csf,
+    preview_report_industry_comparison,
+    get_products_in_ratings_tree,
 )

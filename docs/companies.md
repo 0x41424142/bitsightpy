@@ -501,3 +501,172 @@ result = bitsightpy.companies.get_ips_by_country(
   }
 }
 ```
+
+### Get NIST CSF Report API
+
+```get_nist_csf``` returns a high-level summary of a company's alignment with NIST CSF by using Bitsight's risk vectors and existing data as evidence.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a company guid | ✅ |
+
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_nist_csf(
+  key=api_token,
+  company_guid='company_guid',
+)
+```
+
+**Example Response:**
+
+```json
+{
+  "requested_by": {
+    "company_guid": "11111111-1111-1111-1111-111111111111",
+    "company_name": "Company, Inc."
+  },
+  "company": "Company",
+  "functions": [
+    {
+      "nist_grade": "A",
+      "name": "Identify",
+      "categories": [
+        {
+          "nist_grade": "A",
+          "description": "The data, personnel, devices, systems, and facilities that enable the organization to achieve business purposes are identified and managed consistent with their relative importance to business objectives and the organization’s risk strategy.",
+          "subcategories": [
+            {
+              "supported": false,
+              "name": "ID.AM-1",
+              "description": "Physical devices and systems within the organization are inventoried."
+            },
+            {
+              "nist_grade": "A",
+              "name": "ID.AM-2",
+              "supported": true,
+              "summary": "Using Bitsight Security Ratings, an organization can confirm the effectiveness of its policies by quantifying the organization’s security posture.",
+              "risk_vectors": [
+                {
+                  "risk_type": "requirements",
+                  "value": "Bitsight Security Ratings"
+                }
+              ],
+              "description": "Software platforms and applications within the organization are inventoried."
+            },
+            […]
+            {
+              "supported": false,
+              "name": "ID.AM-6",
+              "description": "cybersecurity roles and responsibilities for the entire workforce and third-party stakeholders (e.g., suppliers,customers, partners) are established."
+            }
+          ],
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Preview Report with Industry Comparison API
+
+```preview_report_industry_comparison``` returns a synopsis of a company's security posture compared to its industry peers. It includes a company's rating on the first day of the current quarter, the company's rating on the first day of the previous quarter and risk vectors by industry.
+
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a company guid | ✅ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.preview_report_industry_comparison(
+  key=api_token,
+  company_guid='company_guid',
+)
+```
+
+**Example Response:**
+
+```json
+{
+  "company":{
+    "company_guid":"eed24cfa-c3ea-4467-aefa-89648881e277",
+    "report_date":"July 9, 2019",
+    "name":"Company",
+    "url":"http://company.com/corporate",
+    "industry":"Technology",
+    "ratings":[
+      {
+        "rating_date":"2024-05-01",
+        "rating":720,
+        "range":"Intermediate",
+        "rating_color":"#e8a951",
+        "industry_percentile":90
+      },
+      […]
+    ],
+    "rating_details":[
+      […]
+      {
+        "category":"Diligence",
+        "name":"SPF",
+        "industry_comparison":"Below Industry Average",
+        "slug":"spf"
+      }
+    ]
+  }
+}
+```
+
+### Get Products in a Ratings Tree API
+
+```get_products_in_ratings_tree``` returns a list of service provider products that are used by companies in a ratings tree.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a company guid | ✅ |
+| ```fields``` | ```str``` as a comma-separated string of fields to include in the output | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` (full-text search) | ❌ |
+| ```sort``` | ```str``` (sort by a field. use a "-" to reverse order) | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_products_in_ratings_tree(
+  key=api_token,
+  company_guid='company_guid',
+)
+```
+
+
+**Example Response:**
+
+```json
+[
+    {
+      "product_guid":"55555555-pppp-rrrr-oooo-dddddddddddd",
+      "product_name":"Black Hills POS",
+      "product_types":[
+        "Order Management"
+      ],
+      "provider_guid":"a5e23bf0-38d4-4cea-aa50-19ee75da481d",
+      "provider_name":"Black Hills Technologies",
+      "provider_industry":"Technology",
+      "company_count":1,
+      "domain_count":2,
+      "percent_dependent":8.3,
+      "percent_dependent_company":9.1,
+      "relative_importance":0.10714285714285714,
+      "relative_criticality":"high"
+    },
+    //...
+  ]
+```

@@ -622,6 +622,30 @@ CALL_SCHEMA = frozendict(
                 "method": ["GET"],
                 "pagination": False,
             },
+            "get_nist_csf": {
+                "endpoint": "companies/{guid}/regulatory/nist",
+                "params": ["guid", "format"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": False,
+            },
+            "preview_report_industry_comparison": {
+                "endpoint": "ratings/v1/companies/{guid}/reports/company-preview",
+                "params": ["guid", "format"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET", "POST"],
+                "pagination": False,
+            },
+            "get_products_in_ratings_tree": {
+                "endpoint": "ratings/v1/companies/{guid}/company-tree/products",
+                "params": ["guid", "limit", "fields", "offset", "q", "sort"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": True,
+            },
         },
     }
 )
