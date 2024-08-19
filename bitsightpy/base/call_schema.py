@@ -598,6 +598,30 @@ CALL_SCHEMA = frozendict(
                     "threat_severity_level",
                 ],
             },
+            "get_asset_risk_matrix": {
+                "endpoint": "ratings/v1/companies/{guid}/assets/statistics",
+                "params": ["guid", "fields", "expand"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": False,
+            },
+            "get_ratings_tree": {
+                "endpoint": "ratings/v1/companies/{guid}/company-tree",
+                "params": ["guid"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": False,
+            },
+            "get_ips_by_country": {
+                "endpoint": "ratings/v1/companies/{guid}/countries",
+                "params": ["guid"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": False,
+            },
         },
     }
 )

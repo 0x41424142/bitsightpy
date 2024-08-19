@@ -10,4 +10,7 @@ from .calls import (
     get_findings_summaries,
     get_country_details,
     get_assets,
+    get_asset_risk_matrix,
+    get_ratings_tree,
+    get_ips_by_country,
 )

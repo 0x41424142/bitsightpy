@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bitsightpy"
-version = "0.1.0"
+version = "0.1.1"
 description = "An SDK for working with BitSight Tech APIs"
 authors = ["0x41424142 <jake@jakelindsay.uk>", "0x4A414B45 <jake.lindsay@thermofisher.com"]
 license = "MIT"
@@ -13,6 +13,11 @@ frozendict = "^2.4.4"
 mkdocs = "^1.6.0"
 mkdocs-material = "^9.5.31"
 
+[tool.poetry.urls]
+Homepage = "https://github.com/0x41424142/bitsightpy"
+Documentation = "https://bitsightpy.jakelindsay.uk"
+Repository = "https://github.com/0x41424142/bitsightpy"
+Issues = "https://github.com/0x41424142/bitsightpy/issues"
 
 [build-system]
 requires = ["poetry-core"]

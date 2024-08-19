@@ -170,3 +170,68 @@ def get_assets(
                 kwargs[param] = new_params[param]
 
     return responses
+
+
+def get_asset_risk_matrix(key: str, company_guid: str) -> dict:
+    """
+    Get data from Bitsight's asset risk matrix. This data includes
+    counts and severities for each asset under a given ```company_guid```,
+    including findings within the last 60 days. Findings are grouped
+    by the importance of the asset in a 3x3 or 4x4 matrix.
+
+    Args:
+        key (str): Your BitSight API key.
+        company_guid (str): A company guid. See ```bitsightpy.portfolio.get_details()``` for getting company guids.
+
+    Returns:
+        dict: A dictionary containing the API response.
+    """
+
+    return call_api(
+        key=key,
+        module="companies",
+        endpoint="get_asset_risk_matrix",
+        params={"guid": company_guid},
+    ).json()
+
+
+def get_ratings_tree(key: str, company_guid: str) -> dict:
+    """
+    Get a company's ratings tree, which includes the company's
+    subsidiaries and the ratings of those subsidiaries and any
+    subsidiaries of the subsidiaries.
+
+    Args:
+        key (str): Your BitSight API key.
+        company_guid (str): A company guid. See ```bitsightpy.portfolio.get_details()``` for getting company guids.
+
+    Returns:
+        dict: A dictionary containing the API response.
+    """
+
+    return call_api(
+        key=key,
+        module="companies",
+        endpoint="get_ratings_tree",
+        params={"guid": company_guid},
+    ).json()
+
+
+def get_ips_by_country(key: str, country_guid: str) -> dict:
+    """
+    Get the number of IPs a company has by country.
+
+    Args:
+        key (str): Your BitSight API key.
+        country_guid (str): A country guid. See ```bitsightpy.portfolio.get_details()``` for getting country guids.
+
+    Returns:
+        dict: A dictionary containing the API response.
+    """
+
+    return call_api(
+        key=key,
+        module="companies",
+        endpoint="get_ips_by_country",
+        params={"guid": country_guid},
+    ).json()

@@ -372,3 +372,132 @@ result = bitsightpy.companies.get_assets(
     }
   ]
 ```
+
+### Get Asset Risk Matrix API
+
+```get_asset_risk_matrix``` returns counts and the severity of security findings for a company, including findings within the last 60 days. Findings are grouped by importance of the asset in a 3x3 or 4x4 matrix.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a company guid | ✅ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_asset_risk_matrix(
+  key=api_token,
+  company_guid='company_guid',
+)
+```
+
+**Example Response:**
+
+```json
+{
+  "assets": [
+    {
+      "asset": "foobar.com",
+      "importance": 0,
+      "importance_category": "low",
+      "stats": {
+        "grades": {
+          "total": 2,
+          "good": 1,
+          "fair": 0,
+          "warn": 0,
+          "bad": 0,
+          "neutral": 1,
+          "na": 0
+        }
+      },
+      "tags": [ ]
+    },
+    […]
+  ],
+  "stats": {
+    "critical": {
+      "grades": {
+        "total": 33,
+        "good": 11,
+        "fair": 18,
+        "warn": 4,
+        "bad": 0,
+        "neutral": 0,
+        "na": 0
+      }
+    },
+    […]
+  }
+}
+```
+
+### Get Ratings Tree API
+
+```get_ratings_tree``` returns a company's ratings tree, including its subsidiaries and those subsidiaries' subsidiaries.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_ratings_tree(
+  key=api_token,
+)
+```
+
+**Example Response:**
+
+```json
+{
+  "guid":"11111111-1111-1111-1111-111111111111",
+  "name":"Company, Inc.",
+  "rating":500,
+  "industry":"Technology",
+  "is_service_provider":false,
+  "rating_type":"CURATED",
+  "is_subscribed":true,
+  "is_primary":false,
+  "children":[
+    […]
+  ],
+  "is_bundled":false,
+  "has_control":true,
+  "is_shell":false
+}
+```
+
+### Get IP Addresses by Country API
+
+```get_ips_by_country``` returns a count of how many IP addresses a company has by country.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a company guid | ✅ |
+
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_ips_by_country(
+  key=api_token,
+  company_guid='company_guid',
+)
+```
+
+
+**Example Response:**
+
+```json
+{
+  "ipv4": {
+    "US": 2,
+    "CA": 1,
+    […]
+  }
+}
+```
