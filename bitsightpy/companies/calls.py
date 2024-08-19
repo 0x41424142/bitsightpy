@@ -3,6 +3,7 @@ calls.py - Contains the user-facing functions for the companies API endpoints
 """
 
 from typing import Union
+from csv import DictReader
 
 from ..base import call_api, check_for_pagination
 
@@ -336,3 +337,33 @@ def get_products_in_ratings_tree(
                 kwargs[param] = new_params[param]
 
     return responses
+
+
+def get_ratings_history(key: str, company_guid: str) -> list[dict]:
+    """
+    Get a ```pandas.DataFrame``` of a company's ratings history over the past year.
+
+    Each line contains:
+    - Every day for 1 year, starting on day 1 of the current month
+    - Risk vector letter grades
+    - Percentile ranks, rounded to the nearest 10
+
+    Args:
+        key (str): Your BitSight API key.
+        company_guid (str): A company guid. See ```bitsightpy.portfolio.get_details()``` for getting company guids.
+
+    Returns:
+        list[dict]: the CSV results parsed into a list of dictionaries.
+    """
+
+    response = call_api(
+        key=key,
+        module="companies",
+        endpoint="get_ratings_history",
+        params={"guid": company_guid, "format": "csv"},
+    )
+
+    # Load the CSV response
+    reader = DictReader(response.text.splitlines())
+
+    return list(reader)

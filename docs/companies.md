@@ -653,12 +653,12 @@ result = bitsightpy.companies.get_products_in_ratings_tree(
 [
     {
       "product_guid":"55555555-pppp-rrrr-oooo-dddddddddddd",
-      "product_name":"Black Hills POS",
+      "product_name":"Company Product",
       "product_types":[
         "Order Management"
       ],
       "provider_guid":"a5e23bf0-38d4-4cea-aa50-19ee75da481d",
-      "provider_name":"Black Hills Technologies",
+      "provider_name":"Company Technologies",
       "provider_industry":"Technology",
       "company_count":1,
       "domain_count":2,
@@ -669,4 +669,81 @@ result = bitsightpy.companies.get_products_in_ratings_tree(
     },
     //...
   ]
+```
+
+### Get Ratings History API
+
+```get_ratings_history``` returns a list of dictionaries containing a company's rating history over the past year.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a company guid | ✅ |
+
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_ratings_history(
+  key=api_token,
+  company_guid='company_guid',
+)
+```
+
+**Example Response:**
+
+```py
+from json import dumps
+
+#Show one day's data:
+dumps(result[0], indent=2)
+>>>{
+  "Date": "2023-07-04",
+  "Bitsight Security Rating": "700",
+  "Rating percentile rank": "20",
+  "Unsolicited Communications grade": "B",
+  "Unsol. Comm. percentile rank": "80",
+  "Potentially Exploited grade": "A",
+  "Pot. Exploited percentile rank": "100",
+  "Botnet Infections grade": "A",
+  "Botnet Infections percentile rank": "100",
+  "Malware Servers grade": "C",
+  "Malware percentile rank": "65",
+  "Spam Propagation grade": "A",
+  "Spam Propagation percentile rank": "100",
+  "SPF grade": "C",
+  "SPF percentile rank": "60",
+  "DKIM grade": "B",
+  "DKIM percentile rank": "70",
+  "SSL Configurations grade": "D",
+  "SSL Configurations percentile rank": "30",
+  "DNSSEC grade*": "B",
+  "DNSSEC percentile rank*": "70",
+  "Web Application Headers grade": "A",
+  "Web Application Headers percentile rank": "90",
+  "Insecure Systems grade": "A",
+  "Insecure Systems percentile rank": "100",
+  "Open Ports grade": "D",
+  "Open Ports percentile rank": "20",
+  "File Sharing grade": "A",
+  "File Sharing percentile rank": "100",
+  "SSL Certificates grade": "A",
+  "SSL Certificates percentile rank": "90",
+  "Patching Cadence grade": "A",
+  "Patching Cadence percentile rank": "100",
+  "Server Software grade": "A",
+  "Server Software percentile rank": "90",
+  "Desktop Software grade": "A",
+  "Desktop Software percentile rank": "N/A",
+  "Mobile Software grade": "N/A",
+  "Mobile Software percentile rank": "N/A",
+  "Mobile Application Security grade*": "N/A",
+  "Mobile Application Security percentile rank*": "N/A",
+  "Security Incidents grade": "A",
+  "Security Incidents percentile rank": "100",
+  "Web Application Security grade*": "D",
+  "Web Application Security percentile rank*": "10",
+  "DMARC grade*": "B",
+  "DMARC percentile rank*": "70",
+}
 ```

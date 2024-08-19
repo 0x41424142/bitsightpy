@@ -16,4 +16,5 @@ from .calls import (
     get_nist_csf,
     preview_report_industry_comparison,
     get_products_in_ratings_tree,
+    get_ratings_history,
 )
