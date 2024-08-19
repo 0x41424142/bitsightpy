@@ -19,4 +19,5 @@ from .calls import (
     get_ratings_history,
     get_risk_vectors_summary,
     get_company_requests_summary,
+    compare_client_to_underwriting_guidelines,
 )

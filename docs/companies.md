@@ -854,3 +854,60 @@ result = bitsightpy.companies.get_company_requests_summary(
   ]
 }
 ```
+
+### Compare Client to Underwriting Guidelines API
+
+```compare_client_to_underwriting_guidelines``` returns a comparison of a client's risk vectors and their grades to your underwriting guidelines.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a client/company guid. See ```portfolio.get_details()``` | ✅ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.compare_client_to_underwriting_guidelines(
+  key=api_token,
+  company_guid='company_guid',
+)
+```
+
+**Example Response:**
+
+```json
+{
+  "risk_vector_count": 3,
+  "passed": [
+    {
+      "name": "Web Application Headers",
+      "slug": "application_security",
+      "grade": "A"
+    },    
+  ],
+  "failed": [
+    […]
+    {
+      "name": "Desktop Software",
+      "slug": "desktop_software",
+      "grade": "F"
+    }
+  ],
+  "ungraded": [],
+  "threat_groups_count": 4,
+  "threat_groups_detected_count": 1,
+  "threats_count": 40,
+  "threats_detected_count": 10,
+  "threat_groups_detected": [
+    {
+      "guid": "11111111-1111-1111-1111-111111111111"
+    },
+    […]
+  ],
+  "threats_detected": [
+    {
+      "guid": "11111111-1111-1111-1111-111111111111"
+    },
+  ]
+}
+```

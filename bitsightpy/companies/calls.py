@@ -419,3 +419,23 @@ def get_company_requests_summary(key: str) -> dict:
         module="companies",
         endpoint="get_company_requests_summary",
     ).json()
+
+
+def compare_client_to_underwriting_guidelines(key: str, company_guid: str) -> dict:
+    """
+    Get a comparison of a client's risk vectors to your underwriting guidelines.
+
+    Args:
+        key (str): Your BitSight API key.
+        company_guid (str): A company guid. See ```bitsightpy.portfolio.get_details()```.
+
+    Returns:
+        dict: A dictionary containing the API response.
+    """
+
+    return call_api(
+        key=key,
+        module="companies",
+        endpoint="compare_client_to_underwriting_guidelines",
+        params={"guid": company_guid},
+    ).json()

@@ -670,6 +670,14 @@ CALL_SCHEMA = frozendict(
                 "method": ["GET"],
                 "pagination": False,
             },
+            "compare_client_to_underwriting_guidelines": {
+                "endpoint": "ratings/v1/companies/{guid}/underwriting-guidelines",
+                "params": ["guid"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": False,
+            },
         },
     }
 )
