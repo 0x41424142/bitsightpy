@@ -367,3 +367,37 @@ def get_ratings_history(key: str, company_guid: str) -> list[dict]:
     reader = DictReader(response.text.splitlines())
 
     return list(reader)
+
+
+def get_risk_vectors_summary(key: str, company_guid: str) -> list[dict]:
+    """
+    Get a summary of a company's risk vector performance. Data includes:
+
+    - Risk vector grades
+    - Industry comparisons
+    - Event counts during the past 12 months
+    - The average number of days to resolve a finding
+    - Record count
+    - Finding grade distribution
+    - Latest 10 finding details
+    - Remediation suggestions
+
+    Args:
+        key (str): Your BitSight API key.
+        company_guid (str): A company guid. See ```bitsightpy.portfolio.get_details()``` for getting company guids.
+
+    Returns:
+        list[dict]: A list of dictionaries containing the API response.
+    """
+
+    response = call_api(
+        key=key,
+        module="companies",
+        endpoint="get_risk_vectors_summary",
+        params={"guid": company_guid, "format": "csv"},
+    )
+
+    # Load the CSV response
+    reader = DictReader(response.content.decode("utf-8-sig").splitlines())
+
+    return list(reader)

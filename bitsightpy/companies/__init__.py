@@ -17,4 +17,5 @@ from .calls import (
     preview_report_industry_comparison,
     get_products_in_ratings_tree,
     get_ratings_history,
+    get_risk_vectors_summary,
 )

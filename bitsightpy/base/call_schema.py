@@ -654,6 +654,14 @@ CALL_SCHEMA = frozendict(
                 "method": ["GET"],
                 "pagination": False,
             },
+            "get_risk_vectors_summary": {
+                "endpoint": "ratings/v1/companies/{guid}/risk-vectors/summaries",
+                "params": ["guid", "format"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": False,
+            },
         },
     }
 )

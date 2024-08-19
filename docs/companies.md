@@ -747,3 +747,52 @@ dumps(result[0], indent=2)
   "DMARC percentile rank*": "70",
 }
 ```
+
+### Get Risk Vectors Summary API
+
+```get_risk_vectors_summary``` returns a summary of a company's risk vector performance. Data includes:
+
+- Risk vector grades
+- Industry comparisons
+- Event counts during the past 12 months
+- The average number of days to resolve a finding
+- Record count
+- Finding grade distribution
+- Latest 10 finding details
+- Remediation suggestions
+
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_risk_vectors_summary(
+  key=api_token,
+  company_guid='company_guid',
+)
+```
+
+**Example Response:**
+
+```py
+from json import dumps
+
+dumps(result[0], indent=2)
+>>>[
+  {
+    "Risk Vector Slug": "botnet_infections",
+    "Risk Vector": "Botnet Infections",
+    "Grade": "A",
+    "Industry Comparison": "Top 90%",
+    "Event Counts Past Year": "3",
+    "Average Days to Resolve": "1.5",
+    "Record Count": "",
+    "Grade Distribution Good": "",
+    "Grade Distribution Fair": "",
+    "Grade Distribution Warn": "",
+    "Grade Distribution Bad": "",
+    "Grade Distribution Neutral": "",
+    ...
+  },
+  ...
+]
+```
