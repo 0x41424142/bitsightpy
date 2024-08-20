@@ -1,8 +1,12 @@
 # bitsightpy - A Python SDK for Interacting With Bitsight APIs
 
+![Logo](https://raw.githubusercontent.com/0x41424142/bitsightpy/main/imgs/logo.png)
+
 ```bitsightpy``` is an SDK for interacting with [Bitsight](https://bitsight.com) APIs.
 
-![In Development](https://img.shields.io/badge/In%20DEVELOPMENT-8A2BE2?style=for-the-badge)
+[![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge)](https://github.com/psf/black) ![Development Status](https://img.shields.io/badge/in%20development-8A2BE2?style=for-the-badge)  ![PyPI - Latest Version](https://img.shields.io/pypi/v/bitsightpy?style=for-the-badge&logo=pypi&logoColor=yellow) ![Python Versions](https://img.shields.io/pypi/pyversions/bitsightpy?style=for-the-badge&logo=python&logoColor=yellow) ![GitHub Stars](https://img.shields.io/github/stars/0x41424142/bitsightpy?style=for-the-badge) ![PyPI - Downloads](https://img.shields.io/pypi/dm/bitsightpy?style=for-the-badge&logo=pypi&logoColor=yellow)
+
+![Black Formatter Status](https://github.com/0x41424142/bitsightpy/actions/workflows/black.yml/badge.svg?event=push) ![CodeQL Scan Status](https://github.com/0x41424142/bitsightpy/actions/workflows/codeql.yml/badge.svg?branch=main)
 
 ```py
 from bitsightpy.portfolio import get_details
