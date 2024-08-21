@@ -534,3 +534,68 @@ def get_product_types_from_folder(
                 kwargs[param] = new_params[param]
 
     return responses
+
+
+def get_product_usage(
+    key: str,
+    folder_guid: str,
+    product_guid: str,
+    page_count: Union[int, "all"] = "all",
+    **kwargs,
+) -> list[dict]:
+    """
+    Get a list of third parties that use a particular product type.
+
+    Args:
+        key (str): Your BitSight API key.
+        folder_guid (str): The unique identifier of the folder. See get_folders() for a list of folders.
+        product_guid (str): The unique identifier of the product type. See companies.get_products() for a list of products.
+        page_count (Union[int, 'all'], optional): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        fields (str): A comma-separated string of fields to include in the response. Defaults to all fields.
+        limit (int): The number of products to return in a single response.
+        offset (int): The number of products to skip.
+        q (str): A full-text search query to filter products by.
+        sort (str): The field to sort by.
+
+    Returns:
+        list[dict]: A list of dictionaries containing product information.
+    """
+
+    # Check that page_count is valid
+    if page_count != "all" and type(page_count) != int and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    while True:
+        kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
+        kwargs["product_guid"] = str(product_guid)
+        response = call_api(
+            key=key,
+            module="folders",
+            endpoint="get_product_usage",
+            params=kwargs,
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                kwargs[param] = new_params[param]
+
+    return responses

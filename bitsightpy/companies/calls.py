@@ -467,3 +467,62 @@ def highlight_primary(
         params={"guid": company_guid},
         post_data=post_data,
     ).status_code
+
+
+def get_products(
+    key: str, company_guid: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
+    """
+    Get a list of enterprise products used at the domains of a particular company.
+
+    Args:
+        key (str): Your BitSight API key.
+        company_guid (str): A company guid. See ```bitsightpy.portfolio.get_details()``` for getting company guids.
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional keyword arguments for the API call.
+
+    :Kwargs:
+        fields (str): Comma-separated string of fields to include in the response.
+        limit (int): The number of results to return per page.
+        offset (int): The number of results to skip before returning. API handles pagination, so you don't really need to use this.
+        q (str): A full-text search query.
+        sort (str): The field to sort by. Default is 'name'. To sort in descending order, add a '-' before the field name.
+
+    Returns:
+        list[dict]: A list of dictionaries containing the API response.
+    """
+
+    # Check that page_count is valid
+    if page_count != "all" and type(page_count) != int and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    while True:
+        kwargs["guid"] = str(company_guid)  # account for call_api .pop-ing guid
+        response = call_api(
+            key=key,
+            module="companies",
+            endpoint="get_products",
+            params=kwargs,
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                kwargs[param] = new_params[param]
+
+    return responses

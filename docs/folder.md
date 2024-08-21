@@ -510,5 +510,47 @@ result = bitsightpy.folders.get_product_types_from_folder(
         "22222222-2222-2222-2222-222222222222"
       ]
     }
+    //,...
+  ]
+```
+
+### Get Product Usage of Companies in a Folder API
+
+```get_product_usage``` returns a list of third parties in a folder that use a particular product type.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```product_guid``` | ```str``` as a product guid | ✅ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
+| ```fields``` | ```str``` | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_product_usage(
+  key=key,
+  folder_guid=folder_guid,
+  product_guid=product_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    {
+      "company_guid":"19d16bf5-11a6-467b-b7b1-f5563daece69",
+      "company_name":"Pollinate, Inc.",
+      "domain_count":2,
+      "percent_dependent":15.4,
+      "relationship_source":"bitsight"
+    }
+    //,...
   ]
 ```

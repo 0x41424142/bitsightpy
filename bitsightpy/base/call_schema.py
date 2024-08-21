@@ -544,6 +544,22 @@ CALL_SCHEMA = frozendict(
                 "method": ["GET"],
                 "pagination": True,
             },
+            "get_product_usage": {
+                "endpoint": "ratings/v1/folders/{guid}/products/{product_guid}/companies",
+                "params": [
+                    "guid",
+                    "product_guid",
+                    "fields",
+                    "limit",
+                    "offset",
+                    "q",
+                    "sort",
+                ],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": True,
+            },
         },
         "companies": {
             "get_company_details": {
@@ -725,6 +741,14 @@ CALL_SCHEMA = frozendict(
                 "use_requests_json": True,
                 "method": ["PATCH"],
                 "pagination": False,
+            },
+            "get_products": {
+                "endpoint": "ratings/v1/companies/{guid}/products",
+                "params": ["guid", "fields", "limit", "offset", "q", "sort"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": True,
             },
         },
     }

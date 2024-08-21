@@ -21,4 +21,5 @@ from .calls import (
     get_company_requests_summary,
     compare_client_to_underwriting_guidelines,
     highlight_primary,
+    get_products,
 )
