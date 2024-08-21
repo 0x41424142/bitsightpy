@@ -554,3 +554,50 @@ result = bitsightpy.folders.get_product_usage(
     //,...
   ]
 ```
+
+### Get Service Providers in a Folder API
+
+```get_service_providers_from_folder``` returns a list of service providers that companies in a folder use.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
+| ```fields``` | ```str``` | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_service_providers_from_folder(
+  key=key,
+  folder_guid=folder_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    {
+      "provider_guid":"55555555-pppp-rrrr-oooo-dddddddddddd",
+      "provider_name":"Black Hills Technologies",
+      "provider_industry":"Technology",
+      "product_types":[
+        "Order Management"
+      ],
+      "company_count":4,
+      "product_count":1,
+      "domain_count":5,
+      "relative_importance":1.3315300783372361E-5,
+      "percent_dependent":0.1,
+      "percent_dependent_company":0.1,
+      "relative_criticality":"low"
+    }
+    //,...
+  ]
+```

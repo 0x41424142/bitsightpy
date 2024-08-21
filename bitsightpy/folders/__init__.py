@@ -17,4 +17,5 @@ from .calls import (
     get_products_from_folder,
     get_product_types_from_folder,
     get_product_usage,
+    get_service_providers_from_folder,
 )
