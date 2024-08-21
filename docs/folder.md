@@ -426,3 +426,265 @@ result = bitsightpy.folders.get_ratings_graph_from_folder(
   ]
 }
 ```
+
+### Get Products in a Folder API
+
+```get_products_from_folder``` gets service provider products that companies in a folder use.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
+| ```fields``` | ```str``` | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_products_from_folder(
+  key=key,
+  folder_guid=folder_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    […]
+    {
+      "product_guid":"11111111-1111-1111-1111-111111111111",
+      "product_name":"Company, Inc.",
+      "product_types":[
+        "Order Management"
+      ],
+      "provider_guid":"2222-2222-2222-2222-222222222222",
+      "provider_name":"Another Company, Inc.",
+      "provider_industry":"Technology",
+      "company_count":1,
+      "domain_count":1,
+      "percent_dependent":0.2,
+      "percent_dependent_company":33.3,
+      "relative_importance":0.015697703143963113,
+      "relative_criticality":"medium"
+    }
+  ]
+```
+
+### Get Product Types in a Folder API
+
+```get_product_types_from_folder``` returns a list of products that are used by all companies in a folder.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
+| ```fields``` | ```str``` | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_product_types_from_folder(
+  key=key,
+  folder_guid=folder_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    {
+      "product_type":"Audio / Video Delivery",
+      "company_guids":[
+        "11111111-1111-1111-1111-111111111111",
+        "22222222-2222-2222-2222-222222222222"
+      ]
+    }
+    //,...
+  ]
+```
+
+### Get Product Usage of Companies in a Folder API
+
+```get_product_usage``` returns a list of third parties in a folder that use a particular product type.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```product_guid``` | ```str``` as a product guid | ✅ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
+| ```fields``` | ```str``` | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_product_usage(
+  key=key,
+  folder_guid=folder_guid,
+  product_guid=product_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    {
+      "company_guid":"19d16bf5-11a6-467b-b7b1-f5563daece69",
+      "company_name":"Pollinate, Inc.",
+      "domain_count":2,
+      "percent_dependent":15.4,
+      "relationship_source":"bitsight"
+    }
+    //,...
+  ]
+```
+
+### Get Service Providers in a Folder API
+
+```get_service_providers_from_folder``` returns a list of service providers that companies in a folder use.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
+| ```fields``` | ```str``` | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_service_providers_from_folder(
+  key=key,
+  folder_guid=folder_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    {
+      "provider_guid":"11111111-pppp-rrrr-oooo-222222222222",
+      "provider_name":"Company, Inc.",
+      "provider_industry":"Technology",
+      "product_types":[
+        "Order Management"
+      ],
+      "company_count":4,
+      "product_count":1,
+      "domain_count":5,
+      "relative_importance":1.3315300783372361E-5,
+      "percent_dependent":0.1,
+      "percent_dependent_company":0.1,
+      "relative_criticality":"low"
+    }
+    //,...
+  ]
+```
+
+### Get Companies in a Folder that Depend on a Specific Service Provider API
+
+```get_service_provider_dependents``` returns a list of companies in a folder that depend on a specific service provider.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```provider_guid``` | ```str``` as a provider guid | ✅ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_service_provider_dependents(
+  key=key,
+  folder_guid=folder_guid,
+  provider_guid=provider_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    {
+      "company_guid":"11111111-1111-1111-1111-111111111111",
+      "company_name":"Company, Inc.",
+      "domain_count":1,
+      "percent_dependent":0.25,
+      "relationship_source":"bitsight"
+    }
+    //,...
+  ]
+```
+
+### Get Products in a Specific Folder API
+
+```get_products_in_folder``` returns a list of particular service provider products used by companies in a folder.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```provider_guid``` | ```str``` as a product guid | ✅ |
+| ```relationship_type``` | ```Literal["bitsight", "self", "none"]``` | ❌ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
+| ```fields``` | ```str``` | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_products_in_folder(
+  key=key,
+  folder_guid=folder_guid,
+  provider_guid=provider_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    {
+      "product_guid":"11111111-2222-3333-4444-555555555555",
+      "product_name":"Company, Inc. Product",
+      "product_types":[
+        "Order Management"
+      ],
+      "provider_guid":"22222222-2222-2222-2222-222222222222",
+      "provider_name":"Company, Inc.",
+      "provider_industry":"Technology",
+      "company_count":1,
+      "domain_count":1,
+      "percent_dependent":0.0,
+      "percent_dependent_company":0.0,
+      "relative_importance":6.486631668032194E-6,
+      "relative_criticality":"low"
+    }
+    //,...
+  ]
+```

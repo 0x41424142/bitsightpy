@@ -943,3 +943,51 @@ result = bitsightpy.companies.highlight_primary(
 )
 >>>200
 ```
+
+### Get Products of a Company API
+
+```get_products``` returns a list of enterprise products used at the domains of a particular company.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a company guid | ✅ |
+| ```page_count``` | ```Union[int, 'all']``` = ```'all'``` Number of pages to return. Defaults to 'all' | ❌ |
+| ```fields``` | ```str``` as a comma-separated string of fields to include in the output | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` (full-text search) | ❌ |
+| ```sort``` | ```str``` (sort by a field. use a "-" to reverse order) | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_products(
+  key=api_token,
+  company_guid='company_guid',
+)
+```
+
+**Example Response:**
+
+```json
+[
+  {
+    "product_guid":"11111111-2222-3333-4444-555555555555",
+    "product_name":"Company Inc. Product",
+    "product_types":[
+      "Order Management"
+    ],
+    "provider_guid":"22222222-4444-6666-8888-000000000000",
+    "provider_name":"Company Inc.",
+    "provider_industry":"Technology",
+    "company_count":1,
+    "domain_count":2,
+    "percent_dependent":8.3,
+    "percent_dependent_company":100.0,
+    "relative_importance":0.10714285714285714,
+    "relative_criticality":"high",
+    "relationship_source":"bitsight"
+  }
+]
+```
