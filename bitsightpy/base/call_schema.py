@@ -584,6 +584,23 @@ CALL_SCHEMA = frozendict(
                 "method": ["GET"],
                 "pagination": True,
             },
+            "get_products_in_folder": {
+                "endpoint": "ratings/v1/folders/{guid}/providers/{provider_guid}/products",
+                "params": [
+                    "guid",
+                    "provider_guid",
+                    "relationship_type",
+                    "fields",
+                    "limit",
+                    "offset",
+                    "q",
+                    "sort",
+                ],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": True,
+            },
         },
         "companies": {
             "get_company_details": {

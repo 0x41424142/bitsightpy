@@ -611,6 +611,7 @@ result = bitsightpy.folders.get_service_providers_from_folder(
 | ```key``` | ```str``` | ✅ |
 | ```folder_guid``` | ```str``` as a folder guid | ✅ |
 | ```provider_guid``` | ```str``` as a provider guid | ✅ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
 
 **Example Request:**
 
@@ -632,6 +633,57 @@ result = bitsightpy.folders.get_service_provider_dependents(
       "domain_count":1,
       "percent_dependent":0.25,
       "relationship_source":"bitsight"
+    }
+    //,...
+  ]
+```
+
+### Get Products in a Specific Folder API
+
+```get_products_in_folder``` returns a list of particular service provider products used by companies in a folder.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```provider_guid``` | ```str``` as a product guid | ✅ |
+| ```relationship_type``` | ```Literal["bitsight", "self", "none"]``` | ❌ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
+| ```fields``` | ```str``` | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_products_in_folder(
+  key=key,
+  folder_guid=folder_guid,
+  provider_guid=provider_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    {
+      "product_guid":"11111111-2222-3333-4444-555555555555",
+      "product_name":"Company, Inc. Product",
+      "product_types":[
+        "Order Management"
+      ],
+      "provider_guid":"22222222-2222-2222-2222-222222222222",
+      "provider_name":"Company, Inc.",
+      "provider_industry":"Technology",
+      "company_count":1,
+      "domain_count":1,
+      "percent_dependent":0.0,
+      "percent_dependent_company":0.0,
+      "relative_importance":6.486631668032194E-6,
+      "relative_criticality":"low"
     }
     //,...
   ]

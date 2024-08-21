@@ -19,4 +19,5 @@ from .calls import (
     get_product_usage,
     get_service_providers_from_folder,
     get_service_provider_dependents,
+    get_products_in_folder,
 )
