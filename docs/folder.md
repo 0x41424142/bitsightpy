@@ -426,3 +426,51 @@ result = bitsightpy.folders.get_ratings_graph_from_folder(
   ]
 }
 ```
+
+### Get Products in a Folder API
+
+```get_products_from_folder``` gets service provider products that companies in a folder use.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
+| ```fields``` | ```str``` | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_products_from_folder(
+  key=key,
+  folder_guid=folder_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    […]
+    {
+      "product_guid":"11111111-1111-1111-1111-111111111111",
+      "product_name":"Company, Inc.",
+      "product_types":[
+        "Order Management"
+      ],
+      "provider_guid":"2222-2222-2222-2222-222222222222",
+      "provider_name":"Another Company, Inc.",
+      "provider_industry":"Technology",
+      "company_count":1,
+      "domain_count":1,
+      "percent_dependent":0.2,
+      "percent_dependent_company":33.3,
+      "relative_importance":0.015697703143963113,
+      "relative_criticality":"medium"
+    }
+  ]
+```

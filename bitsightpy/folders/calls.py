@@ -416,3 +416,62 @@ def get_ratings_graph_from_folder(key: str, folder_guid: str) -> dict:
         endpoint="get_ratings_graph_from_folder",
         params={"guid": folder_guid},
     ).json()
+
+
+def get_products_from_folder(
+    key: str, folder_guid: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
+    """
+    Get service provider products that companies in a folder use.
+
+    Args:
+        key (str): Your BitSight API key.
+        folder_guid (str): The unique identifier of the folder. See get_folders() for a list of folders.
+        page_count (Union[int, 'all'], optional): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional optional keyword arguments to pass to the API.
+
+    :Kwargs:
+        fields (str): A comma-separated string of fields to include in the response. Defaults to all fields.
+        limit (int): The number of products to return in a single response.
+        offset (int): The number of products to skip.
+        q (str): A full-text search query to filter products by.
+        sort (str): The field to sort by.
+
+    Returns:
+        list[dict]: A list of dictionaries containing product information.
+    """
+
+    # Check that page_count is valid
+    if page_count != "all" and type(page_count) != int and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    while True:
+        kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
+        response = call_api(
+            key=key,
+            module="folders",
+            endpoint="get_products_from_folder",
+            params=kwargs,
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                kwargs[param] = new_params[param]
+
+    return responses
