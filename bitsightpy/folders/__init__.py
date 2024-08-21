@@ -15,4 +15,5 @@ from .calls import (
     get_findings_from_folder,
     get_ratings_graph_from_folder,
     get_products_from_folder,
+    get_product_types_from_folder,
 )

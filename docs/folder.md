@@ -474,3 +474,41 @@ result = bitsightpy.folders.get_products_from_folder(
     }
   ]
 ```
+
+### Get Product Types in a Folder API
+
+```get_product_types_from_folder``` returns a list of products that are used by all companies in a folder.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```page_count``` | ```Union[int, 'all'] = 'all'``` | ❌ |
+| ```fields``` | ```str``` | ❌ |
+| ```limit``` | ```int``` | ❌ |
+| ```offset``` | ```int``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+| ```sort``` | ```str``` | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_product_types_from_folder(
+  key=key,
+  folder_guid=folder_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    {
+      "product_type":"Audio / Video Delivery",
+      "company_guids":[
+        "11111111-1111-1111-1111-111111111111",
+        "22222222-2222-2222-2222-222222222222"
+      ]
+    }
+  ]
+```
