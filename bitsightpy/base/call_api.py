@@ -91,6 +91,8 @@ def call_api(
         url = url.format(guid=params.pop("guid"))
     if "{folder_guid}" in url:
         url = url.format(folder_guid=params.pop("folder_guid"))
+    if "{provider_guid}" in url:
+        url = url.format(provider_guid=params.pop("provider_guid"))
 
     # Lastly, check if the endpoint requires us to format some parameters back to <param_name>.slug format
     # instead of <param_name>_slug format:

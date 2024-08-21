@@ -584,8 +584,8 @@ result = bitsightpy.folders.get_service_providers_from_folder(
 ```json
 [
     {
-      "provider_guid":"55555555-pppp-rrrr-oooo-dddddddddddd",
-      "provider_name":"Black Hills Technologies",
+      "provider_guid":"11111111-pppp-rrrr-oooo-222222222222",
+      "provider_name":"Company, Inc.",
       "provider_industry":"Technology",
       "product_types":[
         "Order Management"
@@ -597,6 +597,41 @@ result = bitsightpy.folders.get_service_providers_from_folder(
       "percent_dependent":0.1,
       "percent_dependent_company":0.1,
       "relative_criticality":"low"
+    }
+    //,...
+  ]
+```
+
+### Get Companies in a Folder that Depend on a Specific Service Provider API
+
+```get_service_provider_dependents``` returns a list of companies in a folder that depend on a specific service provider.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```folder_guid``` | ```str``` as a folder guid | ✅ |
+| ```provider_guid``` | ```str``` as a provider guid | ✅ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.folders.get_service_provider_dependents(
+  key=key,
+  folder_guid=folder_guid,
+  provider_guid=provider_guid
+)
+```
+
+**Example Response:**
+
+```json
+[
+    {
+      "company_guid":"11111111-1111-1111-1111-111111111111",
+      "company_name":"Company, Inc.",
+      "domain_count":1,
+      "percent_dependent":0.25,
+      "relationship_source":"bitsight"
     }
     //,...
   ]
