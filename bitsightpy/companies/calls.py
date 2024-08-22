@@ -5,7 +5,7 @@ calls.py - Contains the user-facing functions for the companies API endpoints
 from typing import Union
 from csv import DictReader
 
-from ..base import call_api, check_for_pagination
+from ..base import call_api, do_paginated_call
 
 
 def get_company_details(key: str, company_guid: str, fields: list[str] = None) -> dict:
@@ -132,45 +132,56 @@ def get_assets(
         page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
         **kwargs: Additional keyword arguments for the API call.
 
+    :Kwargs:
+        asset (str): A domain name.
+        combined_overrides_importance (str): Comma-separated string of asset importances to include in the response. For example: ```combined_overrides_importance="medium,none"```.
+        expand (Literal["tag_details", "delegated_security_controls]): Expand and show more details.
+        findings_total_count (int): Filter by total number of findings.
+        findings_total_count_lt (int): Filter by total number of findings less than a value.
+        findings_total_count_gt (int): Filter by total number of findings greater than a value.
+        findings_total_count_lte (int): Filter by total number of findings less than or equal to a value.
+        findings_total_count_gte (int): Filter by total number of findings greater than or equal to a value.
+        hosted_by_isnull (bool): Filter by whether the asset is hosted by a third party.
+        importance_categories (str): Comma-separated string of importance categories to include in the response.
+        importance_overrides (str): Comma-separated string of importance overrides to include in the response. For example: ```importance_overrides="high,medium"```.
+        ip_address (Union[str, ipaddress.ip_address]): An IP address.
+        is_ip (bool): Filter to just IP addresses (True) or domains (False)
+        origin_subsidiary_isnull (bool): True = include only assest attributed to a subsidiary. False = include all.
+        overrides_isnull (bool): Include only assets with a calculated importance (True), False = Include only assets with user-assigned importance.
+        tags_contains (list[str]): A list of tags to filter by.
+        tags_isnull (bool): Filter by whether the asset has tags.
+
+        # THE FOLLOWING KWARGS REQUIRE ATTACK SURFACE ANALYTICS ENABLED ON THE SUBSCRIPTION:
+        countries (str): Comma-separated string of countries to include in the response.
+        country_codes (str): Comma-separated string of country codes to include in the response.
+        hosted_by_guid (str): A guid for a specific hosting provider. See https://help.bitsighttech.com/hc/en-us/articles/115012193247-GET-Service-Providers
+        origin_subsidary_guid (str): A guid for a specific subsidiary. See https://help.bitsighttech.com/hc/en-us/articles/360006916833-GET-Ratings-Tree
+        product_name-version (str): Comma-separated string of ```product_name-version``` to include in the response.
+        product_support (Literal['current-package', 'current-version', 'incomplete_version', 'obsolete-os-release', 'obsolete-package', 'obsolete-version', 'possible-backports', 'unknown', 'unknown-patch-status]): Filter by product support status.
+        product_vendor (str): Filter by product vendor guid. See https://help.bitsighttech.com/hc/en-us/articles/115012193247-GET-Service-Providers
+        services (str): Comma-separated string of services to include in the response. See https://help.bitsighttech.com/hc/en-us/articles/17445375901847-Open-Port-Finding-Messages
+        threat_evidence_certainty (str ['Possible', 'Likely' 'Confirmed']) as a comma separated string.
+        threat_exposure_detection (str ['Currently', 'Previously']) as a comma separated string.
+        threat_guid (str): a vulnerability guid.
+        threat_severity_levels (str ['minor', 'moderate', 'material', 'severe']): Comma-separated string of threat severity levels to include in the response.
+
     Returns:
         list[dict]: A list of dictionaries containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
-
-    responses = []
-    pulled = 0
-
-    # Account for if the user passes an ipaddress.IPV4Address object in the ip_address parameter
+    # Account for if the user passes an ipaddress.ip_address object in the ip_address parameter
     if "ip_address" in kwargs:
         kwargs["ip_address"] = str(kwargs["ip_address"])
 
-    while True:
-        kwargs["guid"] = str(company_guid)  # account for call_api .pop-ing guid
-        response = call_api(
-            key=key, module="companies", endpoint="get_assets", params=kwargs
-        )
-        data = response.json()
+    kwargs["guid"] = str(company_guid)  # account for call_api .pop-ing guid
 
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="companies",
+        endpoint="get_assets",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_asset_risk_matrix(key: str, company_guid: str) -> dict:
@@ -303,40 +314,15 @@ def get_products_in_ratings_tree(
         list[dict]: A list of dictionaries containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
+    kwargs["guid"] = str(company_guid)  # account for call_api .pop-ing guid
 
-    responses = []
-    pulled = 0
-
-    while True:
-        kwargs["guid"] = str(company_guid)  # account for call_api .pop-ing guid
-        response = call_api(
-            key=key,
-            module="companies",
-            endpoint="get_products_in_ratings_tree",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="companies",
+        endpoint="get_products_in_ratings_tree",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_ratings_history(key: str, company_guid: str) -> list[dict]:
@@ -492,37 +478,12 @@ def get_products(
         list[dict]: A list of dictionaries containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
+    kwargs["guid"] = str(company_guid)  # account for call_api .pop-ing guid
 
-    responses = []
-    pulled = 0
-
-    while True:
-        kwargs["guid"] = str(company_guid)  # account for call_api .pop-ing guid
-        response = call_api(
-            key=key,
-            module="companies",
-            endpoint="get_products",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="companies",
+        endpoint="get_products",
+        page_count=page_count,
+        **kwargs,
+    )

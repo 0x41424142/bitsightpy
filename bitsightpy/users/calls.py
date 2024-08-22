@@ -3,9 +3,8 @@ calls.py - Contains the user-facing functions to call any of the Users BitSight 
 """
 
 from typing import Union, Optional, Literal
-from urllib.parse import parse_qs
 
-from ..base import call_api, check_for_pagination
+from ..base import call_api, do_paginated_call
 
 
 def get_users(key: str, page_count: Union[int, "all"] = "all", **kwargs) -> list[dict]:
@@ -36,36 +35,9 @@ def get_users(key: str, page_count: Union[int, "all"] = "all", **kwargs) -> list
         list[dict]: JSON containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
-
-    responses = []
-    pulled = 0
-
-    while True:
-        response = call_api(
-            key=key, module="users", endpoint="get_users", params=kwargs
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key, module="users", endpoint="get_users", page_count=page_count, **kwargs
+    )
 
 
 def create_user(

@@ -4,7 +4,7 @@ calls.py - Contains the user-facing base function to get a dictionary of all ava
 
 from typing import Union
 
-from ..base import call_api, check_for_pagination
+from ..base import call_api, do_paginated_call
 
 
 def get_details(
@@ -52,36 +52,13 @@ def get_details(
         list[dict]: JSON containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
-
-    responses = []
-    pulled = 0
-
-    while True:
-        response = call_api(
-            key=key, module="portfolio", endpoint="get_details", params=kwargs
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="portfolio",
+        endpoint="get_details",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_summary(key: str, folder: str = None, tier: str = None) -> dict:
@@ -420,39 +397,13 @@ def get_portfolio_products(
         list[dict]: JSON containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
-
-    responses = []
-    pulled = 0
-
-    while True:
-        response = call_api(
-            key=key,
-            module="portfolio",
-            endpoint="get_portfolio_products",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="portfolio",
+        endpoint="get_portfolio_products",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_product_usage(
@@ -478,36 +429,15 @@ def get_product_usage(
         list[dict]: JSON containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
+    kwargs["guid"] = guid
 
-    responses = []
-    pulled = 0
-
-    while True:
-        response = call_api(
-            key=key, module="portfolio", endpoint="get_product_usage", params=kwargs
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="portfolio",
+        endpoint="get_product_usage",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_product_types(
@@ -532,36 +462,13 @@ def get_product_types(
         list[dict]: JSON containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
-
-    responses = []
-    pulled = 0
-
-    while True:
-        response = call_api(
-            key=key, module="portfolio", endpoint="get_product_types", params=kwargs
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="portfolio",
+        endpoint="get_product_types",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_service_providers(
@@ -586,36 +493,13 @@ def get_service_providers(
         list[dict]: JSON containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
-
-    responses = []
-    pulled = 0
-
-    while True:
-        response = call_api(
-            key=key, module="portfolio", endpoint="get_service_providers", params=kwargs
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="portfolio",
+        endpoint="get_service_providers",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_service_provider_dependents(
@@ -641,41 +525,15 @@ def get_service_provider_dependents(
         list[dict]: JSON containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
-
-    responses = []
-    pulled = 0
-
     kwargs["guid"] = guid
 
-    while True:
-        response = call_api(
-            key=key,
-            module="portfolio",
-            endpoint="get_service_provider_dependents",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="portfolio",
+        endpoint="get_service_provider_dependents",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_service_provider_products(
@@ -702,41 +560,15 @@ def get_service_provider_products(
         list[dict]: JSON containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
-
-    responses = []
-    pulled = 0
-
     kwargs["guid"] = guid
 
-    while True:
-        response = call_api(
-            key=key,
-            module="portfolio",
-            endpoint="get_service_provider_products",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="portfolio",
+        endpoint="get_service_provider_products",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_security_rating_company_details(key: str, **kwargs) -> list[dict]:
@@ -820,39 +652,13 @@ def get_risk_vector_grades(
         list[dict]: JSON containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
-
-    responses = []
-    pulled = 0
-
-    while True:
-        response = call_api(
-            key=key,
-            module="portfolio",
-            endpoint="get_risk_vector_grades",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="portfolio",
+        endpoint="get_risk_vector_grades",
+        page_count=page_count,
+        params=kwargs,
+    )
 
 
 def get_portfolio_statistics(key: str, **kwargs) -> dict:

@@ -2,18 +2,18 @@
 calls.py - Contains the user-facing functions to call any of the Insights BitSight API endpoints.
 """
 
-from typing import Union, Optional, Literal
+from typing import Union
 
-from ..base import call_api, check_for_pagination
+from ..base import call_api, do_paginated_call
 
 
-def get_insights(key: str, company: str, **kwargs) -> list[dict]:
+def get_insights(key: str, company_guid: str, **kwargs) -> list[dict]:
     """
     Get a list of BitSight insights for a company.
 
     Args:
         key (str): The API token to use for authentication.
-        company (str): The company to get insights for. MUST BE A COMPANY GUID. See https://help.bitsighttech.com/hc/en-us/articles/360055740193-GET-Portfolio-Details
+        company_guid (str): The company's guid to get insights for. See https://help.bitsighttech.com/hc/en-us/articles/360055740193-GET-Portfolio-Details
         **kwargs: Additional optional keyword arguments to pass to the API.
 
     :Kwargs:
@@ -29,7 +29,7 @@ def get_insights(key: str, company: str, **kwargs) -> list[dict]:
         key=key,
         module="insights",
         endpoint="get_insights",
-        params={"company": company, **kwargs},
+        params={"company": company_guid, **kwargs},
     ).json()
 
 
@@ -57,36 +57,10 @@ def get_change_explanations(
         list[dict]: JSON containing the API response.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
-
-    responses = []
-    pulled = 0
-
-    while True:
-        response = call_api(
-            key=key,
-            module="insights",
-            endpoint="get_change_explanations",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="insights",
+        endpoint="get_change_explanations",
+        page_count=page_count,
+        **kwargs
+    )
