@@ -151,7 +151,7 @@ CALL_SCHEMA = frozendict(
                 "pagination": False,
             },
             "get_change_explanations": {
-                "endpoint": "ratings/v1/insights/rating-changes",
+                "endpoint": "ratings/v1/insights/rating_changes",
                 "params": [
                     "limit",
                     "offset",

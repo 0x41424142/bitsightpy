@@ -2,9 +2,9 @@
 calls.py - Contains the user-facing functions for the folders API endpoints
 """
 
-from typing import Literal, Optional, Union
+from typing import Literal, Union
 
-from ..base import call_api, check_for_pagination
+from ..base import call_api, do_paginated_call
 
 
 def get_folders(key: str, exclude_subscription_folders: bool = False) -> list[dict]:
@@ -441,40 +441,15 @@ def get_products_from_folder(
         list[dict]: A list of dictionaries containing product information.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
+    kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
 
-    responses = []
-    pulled = 0
-
-    while True:
-        kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
-        response = call_api(
-            key=key,
-            module="folders",
-            endpoint="get_products_from_folder",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="folders",
+        endpoint="get_products_from_folder",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_product_types_from_folder(
@@ -500,40 +475,15 @@ def get_product_types_from_folder(
         list[dict]: A list of dictionaries containing product information.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
+    kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
 
-    responses = []
-    pulled = 0
-
-    while True:
-        kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
-        response = call_api(
-            key=key,
-            module="folders",
-            endpoint="get_product_types_from_folder",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="folders",
+        endpoint="get_product_types_from_folder",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_product_usage(
@@ -564,41 +514,16 @@ def get_product_usage(
         list[dict]: A list of dictionaries containing product information.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
+    kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
+    kwargs["product_guid"] = str(product_guid)
 
-    responses = []
-    pulled = 0
-
-    while True:
-        kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
-        kwargs["product_guid"] = str(product_guid)
-        response = call_api(
-            key=key,
-            module="folders",
-            endpoint="get_product_usage",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="folders",
+        endpoint="get_product_usage",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_service_providers_from_folder(
@@ -624,40 +549,15 @@ def get_service_providers_from_folder(
         list[dict]: A list of dictionaries containing product information.
     """
 
-    # Check that page_count is valid
-    if page_count != "all" and type(page_count) != int and page_count < 1:
-        raise ValueError(
-            f"page_count must be a positive integer or 'all', not {type(page_count)}"
-        )
+    kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
 
-    responses = []
-    pulled = 0
-
-    while True:
-        kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
-        response = call_api(
-            key=key,
-            module="folders",
-            endpoint="get_service_providers_from_folder",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="folders",
+        endpoint="get_service_providers_from_folder",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_service_provider_dependents(
@@ -688,35 +588,16 @@ def get_service_provider_dependents(
         list[dict]: A list of dictionaries containing company information.
     """
 
-    responses = []
-    pulled = 0
+    kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
+    kwargs["provider_guid"] = str(provider_guid)
 
-    while True:
-        kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
-        kwargs["provider_guid"] = str(provider_guid)
-        response = call_api(
-            key=key,
-            module="folders",
-            endpoint="get_service_provider_dependents",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="folders",
+        endpoint="get_service_provider_dependents",
+        page_count=page_count,
+        **kwargs,
+    )
 
 
 def get_products_in_folder(
@@ -747,32 +628,13 @@ def get_products_in_folder(
         list[dict]: A list of dictionaries containing company information.
     """
 
-    responses = []
-    pulled = 0
+    kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
+    kwargs["provider_guid"] = str(provider_guid)
 
-    while True:
-        kwargs["guid"] = str(folder_guid)  # account for call_api .pop-ing guid
-        kwargs["provider_guid"] = str(provider_guid)
-        response = call_api(
-            key=key,
-            module="folders",
-            endpoint="get_service_provider_dependents",
-            params=kwargs,
-        )
-        data = response.json()
-
-        responses.extend(data["results"])
-        pulled += 1
-
-        if page_count != "all" and pulled >= page_count:
-            print(f"Reached page limit of {page_count}.")
-            break
-
-        new_params = check_for_pagination(response)
-        if not new_params:
-            break
-        else:
-            for param in new_params:
-                kwargs[param] = new_params[param]
-
-    return responses
+    return do_paginated_call(
+        key=key,
+        module="folders",
+        endpoint="get_products_in_folder",
+        page_count=page_count,
+        **kwargs,
+    )

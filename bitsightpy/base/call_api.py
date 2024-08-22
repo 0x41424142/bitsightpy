@@ -96,7 +96,7 @@ def call_api(
 
     # Lastly, check if the endpoint requires us to format some parameters back to <param_name>.slug format
     # instead of <param_name>_slug format:
-    if CALL_SCHEMA[module][endpoint].get("convert_unders_to_periods"):
+    if CALL_SCHEMA[module][endpoint].get("convert_unders_to_periods") and params:
         for param in CALL_SCHEMA[module][endpoint]["convert_unders_to_periods"]:
             if params.get(param):
                 # Get last occurrence of the underscore and replace it with a period
@@ -140,3 +140,76 @@ def check_for_pagination(response: Response) -> Union[None, str]:
         return params
 
     return None
+
+
+def do_paginated_call(
+    key: str,
+    module: str,
+    endpoint: str = None,
+    headers: Optional[dict] = None,
+    override_method: Literal["GET", "POST", "PUT", "DELETE"] = None,
+    page_count: Union[int, "all"] = "all",
+    **kwargs,
+) -> Union[dict, list[dict]]:
+    """
+    Passes along the GET request itself to call_api, but then handles full pagination logic on behalf of calling function.
+
+    Args:
+        key (str): The API token to use for authentication.
+        module (str): The module to call. Must be a valid module in the schema.
+        endpoint (str): The endpoint to call.
+        params (Optional[dict], optional): URL parameters. Defaults to None.
+        headers (Optional[dict], optional): Headers to include in the request. Defaults to None.
+        method (Literal["GET", "POST", "PUT", "DELETE"]): Override the default method for the endpoint.
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional keyword arguments to pass to call_api.
+
+    Returns:
+        Union[dict, list[dict]]: The full response data from the API call.
+    """
+
+    # Make sure page_count is a valid type
+    if page_count != "all" and not isinstance(page_count, int) and page_count < 1:
+        raise ValueError(
+            f"page_count must be a positive integer or 'all', not {type(page_count)}"
+        )
+
+    responses = []
+    pulled = 0
+
+    while True:
+        # Save any guids that need to be populated each call due to call_api's popping of them:
+        for k in kwargs.keys():
+            if "guid" in k:
+                kwargs[k] = kwargs[k]
+
+        response = call_api(
+            key=key,
+            module=module,
+            endpoint=endpoint,
+            params=(
+                kwargs["params"].copy()
+                if "params" in kwargs
+                else kwargs.copy() if kwargs else None
+            ),
+            headers=headers,
+            override_method=override_method,
+        )
+        data = response.json()
+
+        responses.extend(data["results"])
+        pulled += 1
+
+        if page_count != "all" and pulled >= page_count:
+            print(f"Reached page limit of {page_count}.")
+            break
+
+        new_params = check_for_pagination(response)
+        if not new_params:
+            break
+        else:
+            for param in new_params:
+                # kwargs.update(new_params[param])
+                kwargs.update({param: new_params[param]})
+
+    return responses
