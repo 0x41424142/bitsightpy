@@ -22,4 +22,5 @@ from .calls import (
     compare_client_to_underwriting_guidelines,
     highlight_primary,
     get_products,
+    get_company_findings_summary,
 )

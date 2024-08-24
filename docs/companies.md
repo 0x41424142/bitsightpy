@@ -152,6 +152,8 @@ You can use ```bitsightpy.portfolio.get_details()``` to get a list of companies 
 
 ```get_findings_summaries``` returns summarized findings data for a specific company in your ratings tree.
 
+>> **Head's Up!** This API is different than ```get_company_findings_summary```. This API returns summarized information, while ```get_company_findings_summary``` returns details about findings.
+
 | Arg | Data Type | Required |
 | -- | -- | -- |
 | ```key``` | ```str``` | ✅ |
@@ -180,6 +182,54 @@ You can use ```bitsightpy.portfolio.get_details()``` to get a list of companies 
   ]
 }
 ```
+
+### Get a Single Company's Findings Summary
+
+```get_company_findings_summary``` returns a summary and details of findings for a specific company.
+
+>> **Head's Up!** This API is different than ```get_findings_summaries```. This API returns detailed information about findings, while ```get_findings_summaries``` returns summarized information.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```company_guid``` | ```str``` as a company guid | ✅ |
+| ```type``` | ```Literal['infection', 'server_software', 'vulnerability'] = 'vulnerability'``` | ❌ |
+| ```confidence``` | ```Literal['HIGH', 'LOW']``` | ❌ |
+| ```history``` | ```bool``` = ```True``` (True includes findings before latest rating date, False Excludes them.) | ❌ |
+
+**Example Request:**
+
+```py
+result = bitsightpy.companies.get_company_findings_summary(
+  key=api_token,
+  company_guid='company_guid',
+)
+```
+
+**Example Response:**
+
+```json
+[
+  {
+    "start_date":"2021-01-01",
+    "end_date":"2021-2-01",
+    "stats":[
+      {
+        "id":"CVE-2021-44228",
+        "name":"CVE-2021-44228",
+        "first_seen":"2021-01-05",
+        "event_count":1,
+        "host_count":1,
+        "severity":"HIGH",
+        "confidence":"HIGH",
+        "severity_category":null
+      }
+      //...
+    ]
+  }
+]
+```
+
 
 ### Get Country Details API
 
