@@ -1,5 +1,5 @@
 """
-Init file for companies module
+Pull data on multiple companies or a singular company.
 
 https://help.bitsighttech.com/hc/en-us/sections/360003211153-Companies-API-Endpoint
 """
@@ -22,4 +22,5 @@ from .calls import (
     compare_client_to_underwriting_guidelines,
     highlight_primary,
     get_products,
+    get_company_findings_summary,
 )

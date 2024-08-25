@@ -24,7 +24,7 @@ portfolio_details = get_details(key)
 | ```portfolio``` | ✅ Fully Implemented |
 | ```folders``` | ✅ Fully Implemented |
 | ```companies``` | 🏗️ In Progress |
-| ```current_ratings``` | 🏗️ In Progress |
+| ```finding_details``` | 🏗️ In Progress |
 
 
 # Disclaimer

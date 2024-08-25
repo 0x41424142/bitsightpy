@@ -1,5 +1,5 @@
 """
-Init file for users package
+Manage users in your Bitsight subscription.
 """
 
 from .calls import (

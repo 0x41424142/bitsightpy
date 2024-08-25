@@ -1,5 +1,5 @@
 """
-Init file for portfolio package
+Portfolio APIs lets you pull entities that are in your portfolio, such as companies, contacts, and products.
 """
 
 from .calls import (

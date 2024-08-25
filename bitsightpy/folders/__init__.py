@@ -1,5 +1,5 @@
 """
-Init file for folders package
+Manage folders in your Bitsight subscription.
 
 https://help.bitsighttech.com/hc/en-us/articles/232230788-Folders-API-Endpoint
 """

@@ -2,7 +2,7 @@
 calls.py - Contains the user-facing functions for the companies API endpoints
 """
 
-from typing import Union
+from typing import Literal, Union
 from csv import DictReader
 
 from ..base import call_api, do_paginated_call
@@ -96,6 +96,49 @@ def get_findings_summaries(
 
     return call_api(
         key=key, module="companies", endpoint="get_findings_statistics", params=params
+    ).json()
+
+
+def get_company_findings_summary(
+    key: str,
+    company_guid: str,
+    type: Literal["infection", "server_software", "vulnerability"] = "vulnerability",
+    history: bool = True,
+    **kwargs
+) -> list[dict]:
+    """
+    See a company's findings related to infections, server software, or vulnerabilities.
+
+    Args:
+        key (str): Your BitSight API key.
+        company_guid (str): A company guid. See ```bitsightpy.portfolio.get_details()``` for getting company guids.
+        type (Literal['infection', 'server_software', 'vulnerability']): The type of finding to retrieve. Defaults to 'vulnerability'.
+        history (bool): Include findings before latest rating date (True) or not (False). Defaults to True.
+        **kwargs: Additional keyword arguments for the API call.
+
+    :Kwargs:
+        confidence (Literal['HIGH', 'LOW']): Filter by confidence level. ONLY VALID WHEN type='vulnerability'.
+
+    Returns:
+        list[dict]: A list of dictionaries containing the API response.
+    """
+
+    params = {"guid": str(company_guid), "type": type, "history": history}
+
+    if "confidence" in kwargs and kwargs["confidence"] not in ["HIGH", "LOW"]:
+        raise ValueError("confidence must be 'HIGH' or 'LOW'.")
+
+    if kwargs.get("confidence") and type != "vulnerability":
+        raise ValueError("confidence is only valid when type='vulnerability'.")
+
+    if "confidence" in kwargs:
+        params["confidence"] = kwargs["confidence"].upper()
+
+    return call_api(
+        key=key,
+        module="companies",
+        endpoint="get_company_findings_summary",
+        params=params,
     ).json()
 
 
