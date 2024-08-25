@@ -95,7 +95,7 @@ def call_api(
         url = url.format(provider_guid=params.pop("provider_guid"))
 
     # Lastly, check if the endpoint requires us to format some parameters back to <param_name>.slug format
-    # instead of <param_name>_slug format:
+    # instead of <param_name>_slug format. This version replaces just the last underscore with a period.:
     if CALL_SCHEMA[module][endpoint].get("convert_unders_to_periods") and params:
         for param in CALL_SCHEMA[module][endpoint]["convert_unders_to_periods"]:
             if params.get(param):

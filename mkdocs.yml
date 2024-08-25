@@ -9,6 +9,7 @@ nav:
   - Insight APIs: insight.md
   - Folder APIs: folder.md
   - Companies APIs: companies.md
+  - Findings APIs: findings.md
 
 markdown_extensions:
   - pymdownx.highlight:

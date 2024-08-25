@@ -1,5 +1,5 @@
 """
-Init file for companies module
+Pull data on multiple companies or a singular company.
 
 https://help.bitsighttech.com/hc/en-us/sections/360003211153-Companies-API-Endpoint
 """
