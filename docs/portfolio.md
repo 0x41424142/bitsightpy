@@ -12,7 +12,7 @@ key = '<API_KEY>'
 
 >**Head's Up!:** Some Bitsight API parameters contain a period in their name. Due to Python rules, these periods have been changed to underscores when a user defines them in a call. The underlying base API call function handles the conversion back to a period. For example, ```risk_vector.slug``` is defined by the user as ```risk_vector_slug```.
 
-### Get Portfolio Details API
+## Get Portfolio Details API
 
 ```get_details``` lets you pull information about companies you have subscribed to.
 
@@ -55,7 +55,7 @@ key = '<API_KEY>'
 | ```vendor_action_plan``` | ```Literal['monitor', 'review', 'escalate']``` | ❌ |
 | ```vulnerabilities``` | ```list[str]``` | ❌ |
 
-### Get Portfolio Summary API
+## Get Portfolio Summary API
 
 ```get_summary``` provides a summary of companies in your portfolio. It also can help by getting lists of values that you can then pass to ```get_details```.
 
@@ -66,7 +66,7 @@ key = '<API_KEY>'
 | ```folder``` | ```str``` as a folder guid | ❌ |
 | ```tier``` | ```str``` as a tier guid | ❌ |
 
-### Get Public Disclosures API
+## Get Public Disclosures API
 
 ```get_public_disclosures``` gives a list of public breaches disclosed by companies in your portfolio.
 
@@ -84,7 +84,7 @@ key = '<API_KEY>'
 | ```severity_le``` | ```Literal[0, 1, 2, 3]``` where 0=informational, 3=critical | ❌ |
 | ```tier``` | ```str``` as a tier guid | ❌ |
 
-### Get Contacts API
+## Get Contacts API
 
 ```get_contacts``` returns a list of contacts for the companies in your portfolios.
 
@@ -92,7 +92,7 @@ key = '<API_KEY>'
 | -- | -- | -- |
 | ```key``` | ```str``` | ✅ |
 
-### Assign Contact API
+## Assign Contact API
 
 ```assign_contact``` allows you to assign a point of contact for a company in your portfolio.
 
@@ -105,7 +105,7 @@ key = '<API_KEY>'
 | ```email``` | ```str``` | ✅ | 
 | ```phone_number``` | ```str``` | ❌ |
 
-### Edit Contact API
+## Edit Contact API
 
 ```edit_contact``` allows you to edit the details of the current contact listed for a company in your portfolio.
 
@@ -119,7 +119,7 @@ key = '<API_KEY>'
 | ```email``` | ```str``` | ✅ | 
 | ```phone_number``` | ```str``` | ❌ |
 
-### Get Geographic IP Address Space API
+## Get Geographic IP Address Space API
 
 ```get_geographic_ipspace``` returns a dictionary showing which countries companies in your portfolio have IP address spaces in.
 
@@ -147,7 +147,7 @@ key = '<API_KEY>'
 }
 ```
 
-### Get Company Identifiers API
+## Get Company Identifiers API
 
 ```get_custom_identifiers``` returns a list of custom identifiers & regular Bitsight identifiers for companies in your portfolio.
 
@@ -172,7 +172,7 @@ key = '<API_KEY>'
 ]
 ```
 
-### Customize a Company's ID API
+## Customize a Company's ID API
 
 ```customize_company_id``` allows you to create or update a company's ID.
 
@@ -184,7 +184,7 @@ key = '<API_KEY>'
 | ```custom_id``` | ```str``` | ❌ |
 
 
-### Bulk Add/Edit/Delete Company IDs API
+## Bulk Add/Edit/Delete Company IDs API
 
 ```bulk_manage_ids``` lets you add, edit or delete up to 1000 company IDs at once.
 
@@ -237,7 +237,7 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 }
 ```
 
-### Get Portfolio API Filters
+## Get Portfolio API Filters
 
 ```portfolio_api_filters``` gets infections, open ports, and vulnerabilities in your portfolio.
 
@@ -254,7 +254,7 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 | ```show_ips``` | ```bool``` | ❌ |
 | ```tier``` | ```list[str]``` where ```str``` is a tier guid OR ```Literal['untiered']``` for untiered companies | ❌ |
 
-### Get Portfolio Unique Identifers API
+## Get Portfolio Unique Identifers API
 
 ```portfolio_unique_identifiers``` returns a list of company or country unique identifiers in your portfolio.
 
@@ -263,7 +263,7 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 | ```key``` | ```str``` | ✅ |
 
 
-### Get Portfolio Products API
+## Get Portfolio Products API
 
 ```get_portfolio_products``` Returns a list of products used by companies in your portfolio.
 
@@ -278,7 +278,7 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 | ```q``` | ```str``` | ❌ |
 | ```sort``` | ```str``` | ❌ |
 
-### Get Product Usage API
+## Get Product Usage API
 
 ```get_product_usage``` returns a list of 3rd parties that use a particular product.
 
@@ -294,7 +294,7 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 | ```q``` | ```str``` | ❌ |
 | ```sort``` | ```str``` | ❌ |
 
-### Get Product Types API
+## Get Product Types API
 
 ```get_product_types``` Returns a list of product types used by 3rd parties in your portfolio.
 
@@ -309,7 +309,7 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 | ```q``` | ```str``` | ❌ |
 | ```sort``` | ```str``` | ❌ |
 
-### Get Service Providers API
+## Get Service Providers API
 
 ```get_service_providers``` Returns service providers in your portfolio.
 
@@ -324,7 +324,7 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 | ```q``` | ```str``` | ❌ |
 | ```sort``` | ```str``` | ❌ |
 
-### Get Companies Dependent on a Specific Service Provider API
+## Get Companies Dependent on a Specific Service Provider API
 
 ```get_service_provider_dependents``` Returns a list of companies that rely on a specific service provider.
 
@@ -340,7 +340,7 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 | ```q``` | ```str``` | ❌ |
 | ```sort``` | ```str``` | ❌ |
 
-### Get Service Provider Products in Your Portfolio
+## Get Service Provider Products in Your Portfolio
 
 ```get_service_provider_products``` Returns a list of products by a specific service provider that are in your portfolio.
 
@@ -358,7 +358,7 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 | ```sort``` | ```str``` | ❌ |
 
 
-### Get Security Rating Details of Companies API
+## Get Security Rating Details of Companies API
 
 ```get_security_rating_company_details``` returns a list of security rating details for companies in your portfolio. Includes the unique identifiers of the companies.
 
@@ -407,9 +407,9 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 ]
 ```
 
-### Get Security Rating Details of Countries API
+## Get Security Rating Details of Countries API
 
-`````` returns a list of security rating details for countries in your portfolio. Includes the unique identifiers of the countries.
+```get_security_rating_country_details``` returns a list of security rating details for countries in your portfolio. Includes the unique identifiers of the countries.
 
 >**Head's Up!:** This API endpoint will return an HTTP 413 error if the amount of data the server has to process to fulfill your request is deemed to be too much
 
@@ -455,9 +455,10 @@ result = bitsightpy.portfolio.bulk_manage_ids(
   }
   // ...
 ]
+```
 
 
-### Get Risk Vector Grades for Companies in Your Portfolio API
+## Get Risk Vector Grades for Companies in Your Portfolio API
 
 ```get_risk_vector_grades``` returns a list of risk vector grades for companies in your portfolio.
 
@@ -514,7 +515,7 @@ result = bitsightpy.portfolio.bulk_manage_ids(
 ]
 ```
 
-### Get Portfolio Statistics API
+## Get Portfolio Statistics API
 
 ```get_portfolio_statistics``` returns a list of statistics for your portfolio, including the distribution of companies across rating categories, high/low/median ratings, and risk vector averages.
 
@@ -552,5 +553,3 @@ result = bitsightpy.portfolio.bulk_manage_ids(
   }
 }
 ```
-
-###

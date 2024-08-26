@@ -12,7 +12,7 @@ key = '<API_KEY>'
 
 >**Head's Up!:** Some Bitsight API parameters contain a period in their name. Due to Python rules, these periods have been changed to underscores when a user defines them in a call. The underlying base API call function handles the conversion back to a period. For example, ```risk_vector.slug``` is defined by the user as ```risk_vector_slug```.
 
-### Get Folders API
+## Get Folders API
 
 ```get_folders``` lets you get a list of all folders in your subscription, filtering by ```exclude_subscription_folders```.
 
@@ -68,7 +68,7 @@ key = '<API_KEY>'
 ]
 ```
 
-### Create a New Folder API
+## Create a New Folder API
 
 ```create_folder``` lets you create a new folder. Folders can be used to organize your portfolio to better understand the security performance of certain groups of companies, such as IT vendors.
 
@@ -116,7 +116,7 @@ key = '<API_KEY>'
 }
 ```
 
-### Delete a Folder API
+## Delete a Folder API
 
 ```delete_folder``` lets you delete a folder.
 
@@ -129,7 +129,7 @@ key = '<API_KEY>'
 Returns an HTTP ```204``` if successful.
 
 
-### Edit Folder API
+## Edit Folder API
 
 ```edit_folder``` lets you edit various folder properties.
 
@@ -187,7 +187,7 @@ result = folders.edit_folder(
 200
 ```
 
-### Manage Shared Folder Permissions API
+## Manage Shared Folder Permissions API
 
 ```manage_shared_folder_perms``` lets you manage user permissions for shared folders.
 
@@ -273,7 +273,7 @@ result = bitsightpy.folders.manage_shared_folder_perms(
 }
 ```
 
-### Add Companies to a Folder API
+## Add Companies to a Folder API
 
 ```add_companies_to_folder``` adds companies to an existing folder.
 
@@ -318,7 +318,7 @@ result = bitsightpy.folders.add_companies_to_folder(
 }
 ```
 
-### Remove Companies from a Folder API
+## Remove Companies from a Folder API
 
 ```remove_companies_from_folder``` removes companies from an existing folder.
 
@@ -350,7 +350,7 @@ result = bitsightpy.folders.remove_companies_from_folder(
 }
 ```
 
-### Get Findings in a Folder API
+## Get Findings in a Folder API
 
 ```get_findings_from_folder``` gets findings for a folder.
 
@@ -393,7 +393,7 @@ result = bitsightpy.folders.get_findings_from_folder(
 ]
 ```
 
-### Get Ratings Graph of a Folder API
+## Get Ratings Graph of a Folder API
 
 ```get_ratings_graph_from_folder``` gets the ratings graph for a folder.
 
@@ -427,7 +427,7 @@ result = bitsightpy.folders.get_ratings_graph_from_folder(
 }
 ```
 
-### Get Products in a Folder API
+## Get Products in a Folder API
 
 ```get_products_from_folder``` gets service provider products that companies in a folder use.
 
@@ -475,7 +475,7 @@ result = bitsightpy.folders.get_products_from_folder(
   ]
 ```
 
-### Get Product Types in a Folder API
+## Get Product Types in a Folder API
 
 ```get_product_types_from_folder``` returns a list of products that are used by all companies in a folder.
 
@@ -514,7 +514,7 @@ result = bitsightpy.folders.get_product_types_from_folder(
   ]
 ```
 
-### Get Product Usage of Companies in a Folder API
+## Get Product Usage of Companies in a Folder API
 
 ```get_product_usage``` returns a list of third parties in a folder that use a particular product type.
 
@@ -555,7 +555,7 @@ result = bitsightpy.folders.get_product_usage(
   ]
 ```
 
-### Get Service Providers in a Folder API
+## Get Service Providers in a Folder API
 
 ```get_service_providers_from_folder``` returns a list of service providers that companies in a folder use.
 
@@ -602,7 +602,7 @@ result = bitsightpy.folders.get_service_providers_from_folder(
   ]
 ```
 
-### Get Companies in a Folder that Depend on a Specific Service Provider API
+## Get Companies in a Folder that Depend on a Specific Service Provider API
 
 ```get_service_provider_dependents``` returns a list of companies in a folder that depend on a specific service provider.
 
@@ -638,7 +638,7 @@ result = bitsightpy.folders.get_service_provider_dependents(
   ]
 ```
 
-### Get Products in a Specific Folder API
+## Get Products in a Specific Folder API
 
 ```get_products_in_folder``` returns a list of particular service provider products used by companies in a folder.
 
