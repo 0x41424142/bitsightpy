@@ -109,3 +109,43 @@ def get_latest_alerts(
         page_count=page_count,
         **kwargs,
     )
+
+
+def get_percent_change_details(key: str, alert_guid: str) -> dict:
+    """
+    Get the details of a percent change alert, which show changes in security ratings.
+
+    Args:
+        key (str): The API token to use for authentication.
+        alert_guid (str): The alert guid to get details for.
+
+    Returns:
+        dict: A dictionary of the alert details.
+    """
+
+    return call_api(
+        key=key,
+        module="alerts",
+        endpoint="get_percent_change_alerts",
+        params={"guid": alert_guid},
+    )
+
+
+def get_vulnerability_alert_details(key: str, alert_guid: str) -> dict:
+    """
+    Get details of a vulnerability/infection alert.
+
+    Args:
+        key (str): The API token to use for authentication.
+        alert_guid (str): The alert guid to get details for.
+
+    Returns:
+        dict: A dictionary of the alert details.
+    """
+
+    return call_api(
+        key=key,
+        module="alerts",
+        endpoint="get_vulnerability_alert_details",
+        params={"guid": alert_guid},
+    )

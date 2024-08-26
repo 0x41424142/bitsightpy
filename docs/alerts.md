@@ -174,3 +174,78 @@ companies = get_4th_party_disclosures(key=key, alert_guid='12345678')
   }
 }
 ```
+
+## Get Details of a Percent Change Alert API
+
+```get_percent_change_details``` returns details of percent change alerts. Percent change alerts allow you to filter and get alerts when security ratings increase/decrease by a certain percentage.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```alert_guid``` | ```str``` as an alert guid | ✅ |
+
+**Example Request:**
+
+```py
+from bitsightpy.alerts import get_percent_change_details
+
+key = '<API KEY>'
+
+alert = get_percent_change_details(key=key, alert_guid='12345678')
+```
+
+**Example Response:**
+
+```json
+{
+  "guid": 1234567890,
+  "alert_date": "2024-02-01",
+  "company_name": "Company, Inc.",
+  "company_guid": "11111111-2222-3333-4444-555555555555",
+  "start_date": "2017-01-30",
+  "start_rating": 710,
+  "end_rating": 650,
+  "folder_guid": "22222222-2222-2222-2222-2222222222222",
+  "company_url": "/company/12345",
+  "rating_change_pct": -5,
+  "alert_severity": "WARN",
+  "alert_type": "PERCENT_CHANGE"
+}
+```
+
+## Get Details of a Vulnerability Alert API
+
+```get_vulnerability_alert_details``` returns details of a vulnerability alert.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```alert_guid``` | ```str``` as an alert guid | ✅ |
+
+
+**Example Request:**
+
+```py
+from bitsightpy.alerts import get_vulnerability_alert_details
+
+key = '<API KEY>'
+
+alert = get_vulnerability_alert_details(key=key, alert_guid='12345678')
+```
+
+**Example Response:**
+
+```json
+{
+  "guid":1234567890,
+  "alert_date":"2024-03-28",
+  "company_name":"Example Company",
+  "company_guid":"11111111-1111-1111-1111-111111111111",
+  "start_date":"2024-03-28",
+  "folder_guid":"22222222-2222-2222-2222-222222222222",
+  "company_url":"/company/11111111-1111-1111-1111-111111111111/",
+  "alert_type":"VULNERABILITY",
+  "alert_severity":null,
+  "message":"Unsupported version of OpenSSH software detected."
+}
+```

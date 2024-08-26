@@ -937,6 +937,22 @@ CALL_SCHEMA = frozendict(
                 "method": ["GET"],
                 "pagination": True,
             },
+            "get_percent_change_details": {
+                "endpoint": "ratings/v1/alerts/percent/{guid}",
+                "params": ["guid"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": False,
+            },
+            "get_vulnerability_alert_details": {
+                "endpoint": "ratings/v1/alerts/vulnerability/{guid}",
+                "params": ["guid"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": False,
+            },
         },
     }
 )
