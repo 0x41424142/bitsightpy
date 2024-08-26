@@ -34,7 +34,7 @@ key = '<API_KEY>'
 | ```severity``` | ```Literal['CRITICAL', 'WARN', 'INCREASE', 'INFORMATIONAL']``` | ❌ |
 
 
-** Example Request:**
+**Example Request:**
 
 ```py
 from bitsightpy.alerts import get_alerts
