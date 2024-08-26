@@ -13,9 +13,9 @@ key = '<API_KEY>'
 >**Head's Up!:** Some Bitsight API parameters contain a period in their name. Due to Python rules, these periods have been changed to underscores when a user defines them in a call. The underlying base API call function handles the conversion back to a period. For example, ```risk_vector.slug``` is defined by the user as ```risk_vector_slug```.
 
 
-### Get Findings API
+## Get Findings API
 
-```get_finding_details``` returns a company's findings and their details that affect (or will affect) the Bitsight score. 
+```get_findings``` returns a company's findings and their details that affect (or will affect) the Bitsight score.  Depending on the value that you pass into the ```risk_vector``` and/or ```risk_category``` parameters, you can filter findings by the type of risk they pose.
 
 >**Head's Up!:** Squatted domain findings are NOT returned by this API call.
 
@@ -87,7 +87,7 @@ key = '<API_KEY>'
 company_guid = '11111111-1111-1111-1111-111111111111'
 
 #severity 5+ findings:
-findings = finding_details.get_finding_details(
+findings = finding_details.get_findings(
     key, 
     company_guid, 
     severity_gte=5

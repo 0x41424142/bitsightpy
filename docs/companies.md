@@ -12,7 +12,7 @@ key = '<API_KEY>'
 
 >**Head's Up!:** Some Bitsight API parameters contain a period in their name. Due to Python rules, these periods have been changed to underscores when a user defines them in a call. The underlying base API call function handles the conversion back to a period. For example, ```risk_vector.slug``` is defined by the user as ```risk_vector_slug```.
 
-### Get Company Details API
+## Get Company Details API
 
 ```get_company_details``` returns a company's details, including their rating, rating history, risk vector grades, company information & relationship details. 
 
@@ -121,7 +121,7 @@ You can use ```bitsightpy.portfolio.get_details()``` to get a list of companies 
 }
 ```
 
-### Get Findings Statistics API
+## Get Findings Statistics API
 
 ```get_findings_statistics``` returns stats on findings for a specific company.
 
@@ -148,7 +148,7 @@ You can use ```bitsightpy.portfolio.get_details()``` to get a list of companies 
 ]
 ```
 
-### Get Findings Summaries API
+## Get Findings Summaries API
 
 ```get_findings_summaries``` returns summarized findings data for a specific company in your ratings tree.
 
@@ -183,7 +183,7 @@ You can use ```bitsightpy.portfolio.get_details()``` to get a list of companies 
 }
 ```
 
-### Get a Single Company's Findings Summary
+## Get a Single Company's Findings Summary
 
 ```get_company_findings_summary``` returns a summary and details of findings for a specific company.
 
@@ -231,7 +231,7 @@ result = bitsightpy.companies.get_company_findings_summary(
 ```
 
 
-### Get Country Details API
+## Get Country Details API
 
 ```get_country_details``` pulls 1 year of Bitsight data on an entity.
 
@@ -281,7 +281,7 @@ result = bitsightpy.companies.get_country_details(
 }
 ```
 
-### Get Assets API
+## Get Assets API
 
 ```get_assets``` returns a company's asset information (domains & IPs), including asset importance and number of findings.
 
@@ -423,7 +423,7 @@ result = bitsightpy.companies.get_assets(
   ]
 ```
 
-### Get Asset Risk Matrix API
+## Get Asset Risk Matrix API
 
 ```get_asset_risk_matrix``` returns counts and the severity of security findings for a company, including findings within the last 60 days. Findings are grouped by importance of the asset in a 3x3 or 4x4 matrix.
 
@@ -482,7 +482,7 @@ result = bitsightpy.companies.get_asset_risk_matrix(
 }
 ```
 
-### Get Ratings Tree API
+## Get Ratings Tree API
 
 ```get_ratings_tree``` returns a company's ratings tree, including its subsidiaries and those subsidiaries' subsidiaries.
 
@@ -520,7 +520,7 @@ result = bitsightpy.companies.get_ratings_tree(
 }
 ```
 
-### Get IP Addresses by Country API
+## Get IP Addresses by Country API
 
 ```get_ips_by_country``` returns a count of how many IP addresses a company has by country.
 
@@ -552,7 +552,7 @@ result = bitsightpy.companies.get_ips_by_country(
 }
 ```
 
-### Get NIST CSF Report API
+## Get NIST CSF Report API
 
 ```get_nist_csf``` returns a high-level summary of a company's alignment with NIST CSF by using Bitsight's risk vectors and existing data as evidence.
 
@@ -621,7 +621,7 @@ result = bitsightpy.companies.get_nist_csf(
 }
 ```
 
-### Preview Report with Industry Comparison API
+## Preview Report with Industry Comparison API
 
 ```preview_report_industry_comparison``` returns a synopsis of a company's security posture compared to its industry peers. It includes a company's rating on the first day of the current quarter, the company's rating on the first day of the previous quarter and risk vectors by industry.
 
@@ -673,7 +673,7 @@ result = bitsightpy.companies.preview_report_industry_comparison(
 }
 ```
 
-### Get Products in a Ratings Tree API
+## Get Products in a Ratings Tree API
 
 ```get_products_in_ratings_tree``` returns a list of service provider products that are used by companies in a ratings tree.
 
@@ -721,7 +721,7 @@ result = bitsightpy.companies.get_products_in_ratings_tree(
   ]
 ```
 
-### Get Ratings History API
+## Get Ratings History API
 
 ```get_ratings_history``` returns a list of dictionaries containing a company's rating history over the past year.
 
@@ -798,7 +798,7 @@ dumps(result[0], indent=2)
 }
 ```
 
-### Get Risk Vectors Summary API
+## Get Risk Vectors Summary API
 
 ```get_risk_vectors_summary``` returns a summary of a company's risk vector performance. Data includes:
 
@@ -847,7 +847,7 @@ dumps(result[0], indent=2)
 ]
 ```
 
-### Get Company Requests Summary API
+## Get Company Requests Summary API
 
 ```get_company_requests_summary``` returns a summary of requests your company has made to Bitsight.
 
@@ -905,7 +905,7 @@ result = bitsightpy.companies.get_company_requests_summary(
 }
 ```
 
-### Compare Client to Underwriting Guidelines API
+## Compare Client to Underwriting Guidelines API
 
 ```compare_client_to_underwriting_guidelines``` returns a comparison of a client's risk vectors and their grades to your underwriting guidelines.
 
@@ -962,7 +962,7 @@ result = bitsightpy.companies.compare_client_to_underwriting_guidelines(
 }
 ```
 
-### Highlight Primary or Assign Custom ID API
+## Highlight Primary or Assign Custom ID API
 
 ```highlight_primary``` highlights a company as the primary company in your portfolio. You can also assign a custom ID to a company.
 
@@ -994,7 +994,7 @@ result = bitsightpy.companies.highlight_primary(
 >>>200
 ```
 
-### Get Products of a Company API
+## Get Products of a Company API
 
 ```get_products``` returns a list of enterprise products used at the domains of a particular company.
 

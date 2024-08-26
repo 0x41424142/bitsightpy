@@ -12,7 +12,7 @@ key = '<API_KEY>'
 
 >**Head's Up!:** Some Bitsight API parameters contain a period in their name. Due to Python rules, these periods have been changed to underscores when a user defines them in a call. The underlying base API call function handles the conversion back to a period. For example, ```risk_vector.slug``` is defined by the user as ```risk_vector_slug```.
 
-### Get Users API
+## Get Users API
 
 ```get_users``` lets you get a list of all users in your subscription, filtering by kwargs.
 
@@ -35,7 +35,7 @@ key = '<API_KEY>'
 | ```status``` | ```Literal['Activated', 'Created', 'Deactivated']``` | ❌ |
 
 
-### Create User API
+## Create User API
 
 ```create_user``` creates a user in your Bitsight subscription.
 
@@ -55,7 +55,7 @@ key = '<API_KEY>'
 | ```features``` | ```list[dict]``` such as ```[{'slug': 'wfh-ro', 'value': True}]``` | ❌ |
 | ```value``` | ```bool``` | ❌ |
 
-### Get User Details API
+## Get User Details API
 
 ```get_user_details``` pull all details of a single user in your subscription.
 
@@ -65,7 +65,7 @@ key = '<API_KEY>'
 | ```guid``` | ```str``` | ✅ |
 
 
-### Edit User API
+## Edit User API
 
 ```edit_user``` edits a user in your subscription.
 
@@ -76,7 +76,7 @@ key = '<API_KEY>'
 | ```key``` | ```str``` | ✅ |
 | ```guid``` | ```str``` | ✅ |
 
-### Delete User API
+## Delete User API
 
 ```delete_user``` deletes a user in your subscription.
 
@@ -87,7 +87,7 @@ key = '<API_KEY>'
 | ```key``` | ```str``` | ✅ |
 | ```guid``` | ```str``` | ✅ |
 
-### Turn On 2FA API
+## Turn On 2FA API
 
 ```turn_on_2fa``` enforces two factor authentication on an account.
 
@@ -98,7 +98,7 @@ key = '<API_KEY>'
 | ```key``` | ```str``` | ✅ |
 | ```guid``` | ```str``` | ✅ |
 
-### Resend Activation Email API
+## Resend Activation Email API
 
 ```resend_activation``` will trigger the platform to resend the activation email to a user if they have not activated their account yet.
 
@@ -107,7 +107,7 @@ key = '<API_KEY>'
 | ```key``` | ```str``` | ✅ |
 | ```guid``` | ```str``` | ✅ |
 
-### Reset 2FA API
+## Reset 2FA API
 
 ```reset_2fa``` will delete the current 2FA setup of a user.
 
@@ -118,7 +118,7 @@ key = '<API_KEY>'
 | ```key``` | ```str``` | ✅ |
 | ```guid``` | ```str``` | ✅ |
 
-### Get Subscription Quota API
+## Get Subscription Quota API
 
 ```get_quota``` returns information on how many active, inactive, total & remaining users you have in your subscription.
 
@@ -126,7 +126,7 @@ key = '<API_KEY>'
 | -- | -- | -- |
 | ```key``` | ```str``` | ✅ |
 
-### Get User's Company Views API
+## Get User's Company Views API
 
 ```get_company_views``` returns the company viewing history of an account by guid, including companies that have been viewed recently or most often.
 

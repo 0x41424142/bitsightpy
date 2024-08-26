@@ -211,7 +211,6 @@ def do_paginated_call(
             break
         else:
             for param in new_params:
-                # kwargs.update(new_params[param])
                 kwargs.update({param: new_params[param]})
 
     return responses

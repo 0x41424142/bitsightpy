@@ -12,7 +12,16 @@ from bitsightpy.portfolio import get_details
 key = '<API_TOKEN>'
 
 portfolio_details = get_details(key)
->>>[{'guid': '11111111-1111-1111-1111-111111111111', 'custom_id': None, 'name': 'Some Company', 'shortname': 'Some Company', 'network_size_v4': 50, 'rating': 750, 'rating_date': '2024-08-01', 'added_date': '2024-07-01', 'industry': {'name': 'Technology', 'slug': 'technology'}, ...}, ...]
+>>>[
+    {
+        'guid': '11111111-1111-1111-1111-111111111111', 
+        'custom_id': None, 
+        'name': 'Some Company', 
+        'rating': 750, 
+        'industry': {'name': 'Technology', 'slug': 'technology'}, 
+        ...
+    }, 
+...]
 ```
 
 ## Currently Supported Modules/Calls
@@ -23,8 +32,9 @@ portfolio_details = get_details(key)
 | ```insights``` | ✅ Fully Implemented |
 | ```portfolio``` | ✅ Fully Implemented |
 | ```folders``` | ✅ Fully Implemented |
+| ```finding_details``` | ✅ Fully Implemented |
+| ```alerts``` | ✅ Fully Implemented |
 | ```companies``` | 🏗️ In Progress |
-| ```finding_details``` | 🏗️ In Progress |
 
 
 # Disclaimer
