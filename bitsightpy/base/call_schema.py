@@ -887,5 +887,30 @@ CALL_SCHEMA = frozendict(
                 ],
             },
         },
+        "alerts": {
+            "get_alerts": {
+                "endpoint": "ratings/v2/alerts",
+                "params": [
+                    "limit",
+                    "offset",
+                    "q",
+                    "sort",
+                    "company_guid",
+                    "alert_date",
+                    "alert_date_gt",
+                    "alert_date_lt",
+                    "alert_date_gte",
+                    "alert_date_lte",
+                    "alert_type",
+                    "expand",
+                    "folder_guid",
+                    "severity",
+                ],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": True,
+            },
+        },
     }
 )

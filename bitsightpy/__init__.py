@@ -9,5 +9,6 @@ from . import portfolio
 from . import companies
 from . import folders
 from . import finding_details
+from . import alerts
 
 __surprise__ = b"\xe2\x9c\xa8\xe2\x9c\xa8\xe2\x9c\xa8 Have a great day!".decode("utf-8")

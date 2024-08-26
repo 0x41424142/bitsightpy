@@ -15,7 +15,7 @@ key = '<API_KEY>'
 
 ## Get Findings API
 
-```get_findings``` returns a company's findings and their details that affect (or will affect) the Bitsight score. 
+```get_findings``` returns a company's findings and their details that affect (or will affect) the Bitsight score.  Depending on the value that you pass into the ```risk_vector``` and/or ```risk_category``` parameters, you can filter findings by the type of risk they pose.
 
 >**Head's Up!:** Squatted domain findings are NOT returned by this API call.
 
@@ -168,5 +168,3 @@ findings = finding_details.get_findings(
     }
   ]
 ```
-
-##
