@@ -7,5 +7,5 @@ from .calls import (
     get_4th_party_disclosures,
     get_latest_alerts,
     get_percent_change_details,
-    get_vulnerability_alert_details,
+    get_vuln_alert_details,
 )

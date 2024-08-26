@@ -131,7 +131,7 @@ def get_percent_change_details(key: str, alert_guid: str) -> dict:
     )
 
 
-def get_vulnerability_alert_details(key: str, alert_guid: str) -> dict:
+def get_vuln_alert_details(key: str, alert_guid: str) -> dict:
     """
     Get details of a vulnerability/infection alert.
 

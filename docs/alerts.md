@@ -215,7 +215,7 @@ alert = get_percent_change_details(key=key, alert_guid='12345678')
 
 ## Get Details of a Vulnerability Alert API
 
-```get_vulnerability_alert_details``` returns details of a vulnerability alert.
+```get_vuln_alert_details``` returns details of a vulnerability alert.
 
 | Arg | Data Type | Required |
 | -- | -- | -- |
@@ -226,11 +226,11 @@ alert = get_percent_change_details(key=key, alert_guid='12345678')
 **Example Request:**
 
 ```py
-from bitsightpy.alerts import get_vulnerability_alert_details
+from bitsightpy.alerts import get_vuln_alert_details
 
 key = '<API KEY>'
 
-alert = get_vulnerability_alert_details(key=key, alert_guid='12345678')
+alert = get_vuln_alert_details(key=key, alert_guid='12345678')
 ```
 
 **Example Response:**
