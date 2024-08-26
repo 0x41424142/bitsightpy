@@ -65,6 +65,56 @@ alerts = get_alerts(key=key, page_count=3, alert_date_gte='2024-08-01')
   ]
 ```
 
+## Get latest Alerts API
+
+```get_latest_alerts``` lets you get alerts that have been created since the most recent daily Bitsight update.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```page_count``` | ```Union[int >= 1, 'all']``` = ```'all'``` | ❌ |
+| ```limit``` | ```int >= 1 = 100``` | ❌ |
+| ```offset``` | ```int >= 1``` | ❌ |
+| ```q``` | ```str``` as a company name | ❌ |
+| ```sort``` | ```Literal['guid', 'alert_type', 'company_name', 'folder_name', 'trigger', 'severity']``` | ❌ |
+| ```alert_type``` | ```Literal['PERCENT_CHANGE', 'RATING_THRESHOLD', 'RISK_CATEGORY', 'NIST_CATEGORY', 'PUBLIC_DISCLOSURE', 'INFORMATIONAL', 'VULNERABILITY']``` | ❌ |
+| ```company_guid``` | ```str``` as a company guid | ❌ |
+| ```expand``` | ```Literal['details']``` | ❌ |
+| ```folder_guid``` | ```str``` as a folder guid | ❌ |
+| ```severity``` | ```Literal['CRITICAL', 'WARN', 'INCREASE', 'INFORMATIONAL']``` | ❌ |
+
+**Example Request:**
+
+```py
+from bitsightpy.alerts import get_latest_alerts
+
+key = '<API KEY>'
+
+# Get the first 3 pages of alerts since the last daily update:
+alerts = get_latest_alerts(key=key, page_count=3)
+```
+
+**Example Response:**
+
+```json
+[
+    {
+      "guid":12345678,
+      "alert_type":"RISK_CATEGORY",
+      "alert_date":"2024-07-10",
+      "start_date":"2024-07-09",
+      "company_name":"Example, Inc.",
+      "company_guid":"12345678-1234-1234-1234-123456789123",
+      "company_url":"/company/12345678-1234-1234-1234-123456789123/",
+      "folder_guid":"02fa3d99-dfe5-4695-a26a-fa0a6f1ff98b",
+      "folder_name":"Continuously Monitored",
+      "severity":"WARN",
+      "trigger":"Insecure Systems"
+    },
+    //...
+  ]
+```
+
 ## Get 4th Party Public Disclosure Affected Companies API
 
 ```get_4th_party_disclosures``` lets you get a list of all companies indirectly affected by a 4th party public disclosure.

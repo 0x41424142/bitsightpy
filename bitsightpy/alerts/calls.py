@@ -55,6 +55,7 @@ def get_4th_party_disclosures(
         **kwargs: Additional filters to apply to the disclosures.
 
     ## Kwargs:
+
         limit (int): The maximum number of disclosures to return per page. Defaults to 32.
         offset (int): The number of disclosures to skip before returning results.
         q (str): Full text search query.
@@ -69,6 +70,42 @@ def get_4th_party_disclosures(
         key=key,
         module="alerts",
         endpoint=f"get_4th_party_disclosures",
+        page_count=page_count,
+        **kwargs,
+    )
+
+
+def get_latest_alerts(
+    key: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
+    """
+    Get a list of alerts that were generated during the most recent Bitsight platform update.
+
+    Args:
+        key (str): The API token to use for authentication.
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional filters to apply to the alerts.
+
+    ## Kwargs:
+
+        limit (int): The maximum number of alerts to return per page. Defaults to 100.
+        offset (int): The number of alerts to skip before returning results.
+        q (str): Search company names.
+        sort (Literal['guid', 'alert_type', 'company_name', 'folder_name', 'trigger', 'severity']): The field to sort by.
+        alert_type (Literal['PERCENT_CHANGE', 'RATING_THRESHOLD', 'RISK_CATEGORY', 'NIST_CATEGORY', 'INFORMATIONAL', 'PUBLIC_DISCLOSURE', 'VULNERABILITY']): Filter by alert type.
+        company_guid (str): Filter by company guid. See ```portfolio.get_details``` for more information.
+        expand (Literal['details']): if 'details', shows additional alert details.
+        folder_guid (str): Filter by folder guid. See ```folders.get_folders``` for more information.
+        severity (Literal['CRITICAL', 'WARN', 'INCREASE', 'INFORMATIONAL']): Filter by severity.
+
+    Returns:
+        list[dict]: A list of alert dictionaries.
+    """
+
+    return do_paginated_call(
+        key=key,
+        module="alerts",
+        endpoint="get_latest_alerts",
         page_count=page_count,
         **kwargs,
     )

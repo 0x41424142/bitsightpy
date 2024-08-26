@@ -919,6 +919,24 @@ CALL_SCHEMA = frozendict(
                 "method": ["GET"],
                 "pagination": True,
             },
+            "get_latest_alerts": {
+                "endpoint": "ratings/v2/alerts/latest",
+                "params": [
+                    "limit",
+                    "offset",
+                    "q",
+                    "sort",
+                    "company_guid",
+                    "alert_type",
+                    "expand",
+                    "folder_guid",
+                    "severity",
+                ],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": True,
+            },
         },
     }
 )
