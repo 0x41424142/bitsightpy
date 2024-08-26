@@ -28,7 +28,7 @@ poetry install
 
 ## Bitsightpy CLI
 
-```bitsightpy``` comes with a CLI script that you can use to (currently) interact with the ```portfolio.get_details``` and ```finding_details.get_finding_details``` endpoints.
+```bitsightpy``` comes with a CLI script that you can use to interact with various Bitsight API endpoints. Supported endpoints are listed below in the help output.
 
 ```bash
 usage: bitsightpy [-h] {findings,portfolio,alerts} ...
