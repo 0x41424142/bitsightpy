@@ -911,6 +911,14 @@ CALL_SCHEMA = frozendict(
                 "method": ["GET"],
                 "pagination": True,
             },
+            "get_4th_party_disclosures": {
+                "endpoint": "ratings/v2/alerts/{guid}/affected-companies",
+                "params": ["guid", "alert_guid", "limit", "offset", "q"],
+                "post_data": {},
+                "use_requests_json": False,
+                "method": ["GET"],
+                "pagination": True,
+            },
         },
     }
 )

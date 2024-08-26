@@ -40,3 +40,35 @@ def get_alerts(key: str, page_count: Union[int, "all"] = "all", **kwargs) -> lis
     return do_paginated_call(
         key=key, module="alerts", endpoint="get_alerts", page_count=page_count, **kwargs
     )
+
+
+def get_4th_party_disclosures(
+    key: str, alert_guid: str, page_count: Union[int, "all"] = "all", **kwargs
+) -> list[dict]:
+    """
+    Get a list of 4th party disclosures for a given alert.
+
+    Args:
+        key (str): The API token to use for authentication.
+        alert_guid (str): The alert guid to get 4th party disclosures for.
+        page_count (Union[int, 'all']): The number of pages to retrieve. Defaults to 'all'.
+        **kwargs: Additional filters to apply to the disclosures.
+
+    ## Kwargs:
+        limit (int): The maximum number of disclosures to return per page. Defaults to 32.
+        offset (int): The number of disclosures to skip before returning results.
+        q (str): Full text search query.
+
+    Returns:
+        list[dict]: A list of 4th party disclosure dictionaries.
+    """
+
+    kwargs["guid"] = alert_guid
+
+    return do_paginated_call(
+        key=key,
+        module="alerts",
+        endpoint=f"get_4th_party_disclosures",
+        page_count=page_count,
+        **kwargs,
+    )

@@ -64,3 +64,63 @@ alerts = get_alerts(key=key, page_count=3, alert_date_gte='2024-08-01')
     }
   ]
 ```
+
+## Get 4th Party Public Disclosure Affected Companies API
+
+```get_4th_party_disclosures``` lets you get a list of all companies indirectly affected by a 4th party public disclosure.
+
+| Arg | Data Type | Required |
+| -- | -- | -- |
+| ```key``` | ```str``` | ✅ |
+| ```alert_guid``` | ```str``` as an alert guid | ✅ |
+| ```page_count``` | ```Union[int >= 1, 'all']``` = ```'all'``` | ❌ |
+| ```limit``` | ```int >= 1 = 32``` | ❌ |
+| ```offset``` | ```int >= 0``` | ❌ |
+| ```q``` | ```str``` | ❌ |
+
+>**Head's Up!:** This API will return a ```422``` error if the alert is not a 4th party public disclosure.
+
+**Example Request:**
+
+```py
+from bitsightpy.alerts import get_4th_party_disclosures
+
+key = '<API_KEY>'
+
+companies = get_4th_party_disclosures(key=key, alert_guid='12345678')
+```
+
+**Example Response:**
+
+```json
+{
+  "guid": "12345678",
+  "alert_type": "PUBLIC_DISCLOSURE",
+  "alert_date": "2024-06-04",
+  "start_date": "2024-06-03",
+  "company_name": "Company, Inc.",
+  "company_guid": "11111111-1111-1111-111111111111",
+  "company_url": "/company/11111111-1111-1111-111111111111/",
+  "folder_guid": "22222222-2222-2222-2222-222222222222",
+  "folder_name": "Total Risk Monitoring",
+  "severity": "CRITICAL",
+  "trigger": "Patching Cadence",
+  "details": {
+    "category": "General Security Incident",
+    "message": "Bad Company disclosed the personal information of an unknown number of individuals to an unauthorized third party.",
+    "subcategory": "Human Error",
+    "is_direct": false,
+    "severity": 0,
+    "discovery_date": "2024-06-04",
+    "effective_date": "2024-06-03",
+    "public_disclosure_guid": "33333333-3333-3333-3333-333333333333",
+    "origin_type": "subsidiary",
+    "origin_company":{
+      "guid": "11111111-1111-1111-111111111111",
+      "name": "Perix, SA",
+      "display_url": "/company/11111111-1111-1111-111111111111/",
+      "is_subscribed": false,
+    },
+  }
+}
+```
