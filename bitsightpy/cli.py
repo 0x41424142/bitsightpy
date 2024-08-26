@@ -8,7 +8,7 @@ from argparse import ArgumentParser
 from json import dumps, dump
 from os import path
 
-from bitsightpy.finding_details import get_finding_details
+from bitsightpy.finding_details import get_findings
 from bitsightpy.portfolio import get_details
 
 
@@ -25,7 +25,7 @@ def get_findings(args):
     """
     Get findings for a given company.
     """
-    findings = get_finding_details(
+    findings = get_findings(
         key=args.key,
         company_guid=args.company,
         page_count=int(args.page_count) if args.page_count != "all" else "all",

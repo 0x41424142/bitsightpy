@@ -15,7 +15,7 @@ key = '<API_KEY>'
 
 ### Get Findings API
 
-```get_finding_details``` returns a company's findings and their details that affect (or will affect) the Bitsight score. 
+```get_findings``` returns a company's findings and their details that affect (or will affect) the Bitsight score. 
 
 >**Head's Up!:** Squatted domain findings are NOT returned by this API call.
 
@@ -87,7 +87,7 @@ key = '<API_KEY>'
 company_guid = '11111111-1111-1111-1111-111111111111'
 
 #severity 5+ findings:
-findings = finding_details.get_finding_details(
+findings = finding_details.get_findings(
     key, 
     company_guid, 
     severity_gte=5

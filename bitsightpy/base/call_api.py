@@ -190,9 +190,7 @@ def do_paginated_call(
             params=(
                 kwargs["params"].copy()
                 if "params" in kwargs
-                else kwargs.copy()
-                if kwargs
-                else None
+                else kwargs.copy() if kwargs else None
             ),
             headers=headers,
             override_method=override_method,
@@ -211,7 +209,6 @@ def do_paginated_call(
             break
         else:
             for param in new_params:
-                # kwargs.update(new_params[param])
                 kwargs.update({param: new_params[param]})
 
     return responses

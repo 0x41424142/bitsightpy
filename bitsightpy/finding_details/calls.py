@@ -7,7 +7,7 @@ from typing import Literal, Union, Optional
 from bitsightpy.base.call_api import call_api, do_paginated_call
 
 
-def get_finding_details(
+def get_findings(
     key: str, company_guid: str, page_count: Union[int, "all"] = "all", **kwargs
 ) -> list[dict]:
     """
