@@ -22,7 +22,7 @@ def parse_kwargs(kwargs_list):
     return kwargs
 
 
-def get_findings(args):
+def cli_get_findings(args):
     """
     Get findings for a given company.
     """
@@ -40,7 +40,7 @@ def get_findings(args):
         print(dumps(findings, indent=2))
 
 
-def get_portfolio(args):
+def cli_get_portfolio(args):
     """
     Get your Bitsight portfolio.
     """
@@ -53,7 +53,7 @@ def get_portfolio(args):
         print(dumps(portfolio, indent=2))
 
 
-def alerts(args):
+def cli_get_alerts(args):
     """
     Get a list of your Bitsight alerts.
     """
@@ -108,7 +108,7 @@ def main():
         nargs="*",
         help="Additional keyword arguments to pass to the API call, formatted in key=value pairs.",
     )
-    findings_parser.set_defaults(func=get_findings)
+    findings_parser.set_defaults(func=cli_get_findings)
 
     portfolio_parser = subparsers.add_parser(
         "portfolio",
@@ -124,7 +124,7 @@ def main():
         help="Your Bitsight API key.",
         required=True,
     )
-    portfolio_parser.set_defaults(func=get_portfolio)
+    portfolio_parser.set_defaults(func=cli_get_portfolio)
 
     alerts_parser = subparsers.add_parser(
         "alerts",
@@ -154,7 +154,7 @@ def main():
         help="Additional keyword arguments to pass to the API call, formatted in key=value pairs.",
     )
 
-    alerts_parser.set_defaults(func=alerts)
+    alerts_parser.set_defaults(func=cli_get_alerts)
 
     args = parser.parse_args()
 
